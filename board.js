@@ -33,6 +33,110 @@
 //   claude-haiku-4-5   → mais leve, para tarefas simples
 const AI_MODEL = 'claude-opus-4-7';
 
+// ══════════════════════════════════════════════════════════════════════
+// SYNC COM GITHUB — PERSISTÊNCIA REAL DO HISTÓRICO DE ANÁLISES
+// ══════════════════════════════════════════════════════════════════════
+// O histórico de análises (VER_KEY) é sincronizado com o data.json do
+// repositório GitHub. Isso garante que o histórico persiste entre
+// dispositivos, limpezas de cache e sessões.
+//
+// Fluxo:
+//   1. Na inicialização: puxa data.json do GitHub e faz merge com localStorage
+//   2. A cada nova análise salva: envia o histórico atualizado para o GitHub
+//
+// Configuração (feita uma vez em Configurações):
+//   GH_TOKEN — Personal Access Token com permissão "repo"
+//   GH_REPO  — ex: "dupprehelena/border-board"
+//
+// As funções são assíncronas e silenciosas: nunca bloqueiam a UI.
+
+const GH_API = 'https://api.github.com';
+const GH_HISTORY_PATH = 'data.json'; // arquivo no repo onde o histórico fica
+
+async function ghHeaders() {
+  const token = store.ghToken;
+  if (!token) return null;
+  return {
+    'Authorization': `token ${token}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json'
+  };
+}
+
+// Lê o data.json do GitHub e retorna o objeto parsed (ou null se falhar)
+async function ghReadDataJson() {
+  const repo = store.ghRepo;
+  const hdrs = await ghHeaders();
+  if (!repo || !hdrs) return null;
+  try {
+    const res = await fetch(`${GH_API}/repos/${repo}/contents/${GH_HISTORY_PATH}`, { headers: hdrs });
+    if (!res.ok) return null;
+    const meta = await res.json();
+    const content = atob(meta.content.replace(/\n/g, ''));
+    return { data: JSON.parse(content), sha: meta.sha };
+  } catch(e) { return null; }
+}
+
+// Escreve o data.json no GitHub (merge do histórico)
+async function ghWriteDataJson(newHistorico) {
+  const repo = store.ghRepo;
+  const hdrs = await ghHeaders();
+  if (!repo || !hdrs) return false;
+  try {
+    // Lê SHA atual (necessário para update)
+    const current = await ghReadDataJson();
+    const dataAtual = current?.data || {};
+    // Merge: une histórico remoto com o novo, sem duplicar por id
+    const merged = { ...dataAtual };
+    merged.historico = merged.historico || {};
+    Object.keys(newHistorico).forEach(painel => {
+      const remotos = merged.historico[painel] || [];
+      const idsRemotos = new Set(remotos.map(v => v.id));
+      const novos = (newHistorico[painel] || []).filter(v => !idsRemotos.has(v.id));
+      merged.historico[painel] = [...novos, ...remotos].slice(0, 20);
+    });
+    merged.lastSync = new Date().toLocaleString('pt-BR');
+
+    const body = { message: `sync: análise salva — ${new Date().toLocaleString('pt-BR')}`,
+                   content: btoa(unescape(encodeURIComponent(JSON.stringify(merged, null, 2)))),
+                   branch: 'main' };
+    if (current?.sha) body.sha = current.sha;
+
+    const res = await fetch(`${GH_API}/repos/${repo}/contents/${GH_HISTORY_PATH}`,
+      { method: 'PUT', headers: hdrs, body: JSON.stringify(body) });
+    return res.ok;
+  } catch(e) { return false; }
+}
+
+// Puxa histórico do GitHub e faz merge no localStorage (chamado na inicialização)
+async function ghSyncDown() {
+  const result = await ghReadDataJson();
+  if (!result?.data?.historico) return;
+  const remoto = result.data.historico;
+  const local = JSON.parse(localStorage.getItem(VER_KEY) || '{}');
+  let adicionadas = 0;
+  Object.keys(remoto).forEach(painel => {
+    if (!local[painel]) local[painel] = [];
+    const idsLocais = new Set(local[painel].map(v => v.id));
+    const novas = (remoto[painel] || []).filter(v => !idsLocais.has(v.id));
+    local[painel] = [...novas, ...local[painel]].slice(0, 20);
+    adicionadas += novas.length;
+  });
+  localStorage.setItem(VER_KEY, JSON.stringify(local));
+  if (adicionadas > 0) console.log(`[GitHub Sync] ${adicionadas} análises importadas do repositório.`);
+  updateHistoricoStats();
+}
+
+// Envia o histórico atual para o GitHub (chamado após saveVersionFull)
+async function ghSyncUp() {
+  const all = JSON.parse(localStorage.getItem(VER_KEY) || '{}');
+  const ok = await ghWriteDataJson(all);
+  if (ok) {
+    const badge = document.getElementById('gh-sync-badge');
+    if (badge) { badge.textContent = '↑ sincronizado'; badge.style.color = 'var(--green)'; setTimeout(()=>{badge.textContent='';},3000); }
+  }
+}
+
 // ── STORE — PERSISTÊNCIA LOCAL ──────────────────────────────────────
 // Todos os dados do usuário são salvos no localStorage com a chave SK.
 // O sessionStorage serve como backup caso o localStorage seja limpo.
@@ -1218,8 +1322,15 @@ function go(id, el, skipHistory) {
   // Abre o accordion correspondente ao painel navegado
   openAccordionForPanel(id);
   closeSidebar();
-  // Atualiza estatísticas de histórico quando settings é aberto
-  if(id === 'settings') updateHistoricoStats();
+  // Atualiza painel de settings quando aberto
+  if(id === 'settings') {
+    updateHistoricoStats();
+    updateGhStatus();
+    const tkEl = document.getElementById('gh-token-input');
+    const rpEl = document.getElementById('gh-repo-input');
+    if(tkEl && store.ghToken) tkEl.value = store.ghToken;
+    if(rpEl && store.ghRepo) rpEl.value = store.ghRepo;
+  }
   // Sincroniza a URL sem recarregar a página
   if(!skipHistory) {
     const path = ROUTE_MAP[id] || '/';
@@ -1614,6 +1725,8 @@ function saveVersionFull(panelId, content, tipo) {
   });
   if(all[panelId].length > 20) all[panelId] = all[panelId].slice(0,20);
   localStorage.setItem(VER_KEY, JSON.stringify(all));
+  // Sincroniza com GitHub em background (não bloqueia UI)
+  if(store.ghToken && store.ghRepo) ghSyncUp();
 }
 
 function showVersoes(panelId) {
@@ -1775,6 +1888,21 @@ function importHistorico(input) {
   input.value = ''; // reset para permitir reimportar o mesmo arquivo
 }
 
+function updateGhStatus() {
+  const msg = document.getElementById('gh-status-msg');
+  const badge = document.getElementById('gh-sync-badge');
+  if (!msg) return;
+  if (store.ghToken && store.ghRepo) {
+    msg.style.color = 'var(--green)';
+    msg.textContent = `✓ Configurado · ${store.ghRepo}`;
+    if (badge) { badge.style.color='var(--green)'; badge.textContent='● ativo'; }
+  } else {
+    msg.style.color = 'var(--dim)';
+    msg.textContent = 'Não configurado — análises ficam apenas no browser.';
+    if (badge) { badge.style.color='var(--dim)'; badge.textContent='○ inativo'; }
+  }
+}
+
 function updateHistoricoStats() {
   const el = document.getElementById('historico-stats');
   if (!el) return;
@@ -1810,6 +1938,9 @@ function exportAnaliseTexto(panelId, idx) {
 // Aplica tema e popula componentes simples antes do DOM estar 100% pronto.
 // Tudo que depende de fetch ou dados complexos fica no DOMContentLoaded abaixo.
 if(store.apiKey){document.getElementById('api-key-input').value=store.apiKey;saveKey(store.apiKey);}
+// Pré-carrega configuração do GitHub no store se ainda não existir
+if(!store.ghToken) store.ghToken = '';
+if(!store.ghRepo)  store.ghRepo  = 'dupprehelena/border-board';
 // Padrão: modo claro. Modo escuro só se explicitamente salvo no store.
 if(store.theme==='dark') document.documentElement.classList.add('dark');
 else document.documentElement.classList.remove('dark');
@@ -2258,6 +2389,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // Seed do histórico ANTES de renderizar (garante que os dados estarão disponíveis)
   await seedHistoryFromFile();
+
+  // Sync com GitHub — puxa análises salvas de outros dispositivos/sessões
+  if (store.ghToken && store.ghRepo) ghSyncDown();
 
   loadMonitoringData();
   renderFollowers();
