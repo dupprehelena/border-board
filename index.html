@@ -39,7 +39,7 @@
     window.location.href = '/login.html';
   }
 </script>
-<script>window.DEPLOY_TIMESTAMP="11/05/2026 04:57";</script>
+<script>window.DEPLOY_TIMESTAMP="11/05/2026 05:04";</script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Pular para o conteúdo</a>
@@ -2440,14 +2440,40 @@
   </div>
 
   <div class="card" style="margin-top:10px">
+    <div class="card-label">GitHub · Sync de análises <span id="gh-sync-badge" style="font-size:11px;margin-left:8px;font-weight:400"></span></div>
+    <div class="card-body" style="margin-bottom:10px">
+      Com o GitHub configurado, cada análise gerada é salva automaticamente no repositório — acessível de qualquer dispositivo, sem depender do cache do browser.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+      <div>
+        <label class="lbl" for="gh-token-input">Personal Access Token</label>
+        <input type="password" id="gh-token-input" placeholder="ghp_..." autocomplete="off"
+               style="width:100%;margin-top:4px"
+               oninput="store.ghToken=this.value;saveStore();updateGhStatus()">
+      </div>
+      <div>
+        <label class="lbl" for="gh-repo-input">Repositório (usuario/repo)</label>
+        <input type="text" id="gh-repo-input" placeholder="dupprehelena/border-board" autocomplete="off"
+               style="width:100%;margin-top:4px"
+               oninput="store.ghRepo=this.value;saveStore();updateGhStatus()">
+      </div>
+    </div>
+    <div id="gh-status-msg" style="font-size:12px;color:var(--dim);margin-bottom:10px"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="ghSyncUp().then(()=>{document.getElementById('gh-status-msg').textContent='✓ Sincronizado com sucesso.';document.getElementById('gh-status-msg').style.color='var(--green)'})">↑ Sincronizar agora</button>
+      <button class="btn" onclick="ghSyncDown().then(()=>{document.getElementById('gh-status-msg').textContent='✓ Histórico importado do GitHub.';document.getElementById('gh-status-msg').style.color='var(--green)'})">↓ Importar do GitHub</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:10px">
     <div class="card-label">Histórico de análises</div>
     <div class="card-body" style="margin-bottom:10px">
-      Todas as análises geradas pela IA ficam no localStorage — volátil. Exporte regularmente para preservar o histórico entre sessões, dispositivos e limpezas de cache.
+      Backup manual do histórico local.
     </div>
     <div id="historico-stats" style="font-size:12px;color:var(--dim);margin-bottom:10px"></div>
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="exportHistorico()">⬇ Exportar histórico (JSON)</button>
-      <button class="btn" onclick="importHistoricoClick()">⬆ Importar histórico</button>
+      <button class="btn" onclick="exportHistorico()">⬇ Exportar JSON</button>
+      <button class="btn" onclick="importHistoricoClick()">⬆ Importar JSON</button>
     </div>
     <input type="file" id="import-historico-file" accept=".json" style="display:none" onchange="importHistorico(this)">
     <div id="historico-import-msg" style="font-size:12px;color:var(--dim);margin-top:8px"></div>
