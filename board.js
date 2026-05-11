@@ -1131,34 +1131,8 @@ function markPanelUpdated(id){
   const ups = JSON.parse(localStorage.getItem('bi_panel_updates')||'{}');
   ups[id] = Date.now();
   localStorage.setItem('bi_panel_updates', JSON.stringify(ups));
-  renderPanelFooter(id);
 }
 
-function renderPanelFooter(id){
-  const panel = document.getElementById('p-'+id);
-  if(!panel) return;
-  let footer = panel.querySelector('.panel-update-footer');
-  if(!footer){
-    footer = document.createElement('div');
-    footer.className='panel-update-footer';
-    panel.appendChild(footer);
-  }
-  const ups = JSON.parse(localStorage.getItem('bi_panel_updates')||'{}');
-  const auto = PANEL_AUTOMATION[id];
-  const ts = ups[id] ? fmtTs(ups[id]) : '—';
-  footer.innerHTML=`
-    <div class="panel-update-label">Última atualização: <span class="panel-update-time">${ts}</span></div>
-    ${auto ? `<span class="panel-auto-badge ${auto.on?'on':''}">${auto.label}</span>` : ''}
-  `;
-}
-
-function initAllFooters(){
-  // injeta footer em todos os painéis
-  document.querySelectorAll('.panel[id]').forEach(p=>{
-    const id=p.id.replace('p-','');
-    renderPanelFooter(id);
-  });
-}
 
 // Relógio em tempo real no header
 function startHeaderClock(){
@@ -2029,7 +2003,6 @@ renderReferencias('all');
 // inicializa footers, relógio e timestamp de deploy
 startHeaderClock();
 initDeployTs();
-initAllFooters();
 
 
 // ── FOLLOWERS EDITOR ──
@@ -2141,7 +2114,6 @@ function loadAutoContent(d) {  // não é async — não faz fetch, só popula o
         ups['tendencias'] = parseDataJsonTs(t.gerado_em);
         localStorage.setItem('bi_panel_updates', JSON.stringify(ups));
       }
-      renderPanelFooter('tendencias');
     }
   }
 
@@ -2169,7 +2141,6 @@ function loadAutoContent(d) {  // não é async — não faz fetch, só popula o
       upsSwot['swot'] = parseDataJsonTs(s.gerado_em);
       localStorage.setItem('bi_panel_updates', JSON.stringify(upsSwot));
     }
-    renderPanelFooter('swot');
   }
 
   // PAUTA AUTO
@@ -2192,7 +2163,6 @@ function loadAutoContent(d) {  // não é async — não faz fetch, só popula o
         upsPauta['planejador'] = parseDataJsonTs(p.gerado_em);
         localStorage.setItem('bi_panel_updates', JSON.stringify(upsPauta));
       }
-      renderPanelFooter('planejador');
     }
   }
 }
@@ -2267,7 +2237,6 @@ async function loadMonitoringData() {
         if(parts.length===3) upsMc['monitor-concorrentes'] = new Date(+parts[0],+parts[1]-1,+parts[2]).getTime();
         localStorage.setItem('bi_panel_updates', JSON.stringify(upsMc));
       }
-      renderPanelFooter('monitor-concorrentes');
       // Salva snapshot no histórico se ainda não existe registro para esta data
       const mcHistKey = 'bi_mc_last_saved';
       if(cc.date && localStorage.getItem(mcHistKey) !== cc.date) {
@@ -2308,7 +2277,6 @@ async function loadMonitoringData() {
         if(parts2.length===3) upsMg['monitor-crescimento'] = new Date(+parts2[0],+parts2[1]-1,+parts2[2]).getTime();
         localStorage.setItem('bi_panel_updates', JSON.stringify(upsMg));
       }
-      renderPanelFooter('monitor-crescimento');
       // Salva snapshot no histórico se ainda não existe registro para esta data
       const mgHistKey = 'bi_mg_last_saved';
       if(cg.date && localStorage.getItem(mgHistKey) !== cg.date) {
