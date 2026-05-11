@@ -4189,20 +4189,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // Integração com Netlify Functions (API REST)
 // ══════════════════════════════════════════════════════════════
 
-const API_BASE = '/.netlify/functions/relatorios';
+// ── RELATÓRIOS — API VIA GITHUB ──────────────────────────────────────
+// Os relatórios ficam em data.json no campo "relatorios[]".
+// Todas as operações usam a API do GitHub diretamente — sem servidor,
+// sem Netlify Functions. Persistência real entre dispositivos.
 
 async function carregarRelatorios() {
   try {
-    const response = await fetch(API_BASE, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const dados = await response.json();
-    return dados.relatorios || [];
-  } catch (e) {
+    const result = await ghReadDataJson();
+    return (result?.data?.relatorios) || [];
+  } catch(e) {
     console.error('Erro ao carregar relatórios:', e);
     return [];
   }
@@ -4210,17 +4206,35 @@ async function carregarRelatorios() {
 
 async function salvarRelatorioServidor(relatorio) {
   try {
-    const response = await fetch(API_BASE, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(relatorio),
-    });
+    const current = await ghReadDataJson();
+    const dados = current?.data || {};
+    dados.relatorios = dados.relatorios || [];
+    const novo = {
+      id: Date.now().toString(),
+      data: relatorio.data,
+      titulo: relatorio.titulo || 'Sem título',
+      resumo: relatorio.resumo || '',
+      html: relatorio.html || '',
+      dataCriacao: new Date().toISOString()
+    };
+    dados.relatorios.push(novo);
+    dados.ultimaAtualizacao = new Date().toISOString();
 
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const hdrs = await ghHeaders();
+    if (!hdrs) { alert('Configure o GitHub em Configurações para salvar relatórios.'); return null; }
 
-    const resultado = await response.json();
-    return resultado.sucesso ? resultado.relatorio : null;
-  } catch (e) {
+    const body = {
+      message: `relatório: ${novo.titulo} — ${novo.data}`,
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2)))),
+      branch: 'main'
+    };
+    if (current?.sha) body.sha = current.sha;
+
+    const res = await fetch(`${GH_API}/repos/${store.ghRepo}/contents/${GH_HISTORY_PATH}`,
+      { method: 'PUT', headers: hdrs, body: JSON.stringify(body) });
+
+    return res.ok ? novo : null;
+  } catch(e) {
     console.error('Erro ao salvar relatório:', e);
     return null;
   }
@@ -4228,16 +4242,26 @@ async function salvarRelatorioServidor(relatorio) {
 
 async function deletarRelatorioServidor(id) {
   try {
-    const response = await fetch(API_BASE, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
-    });
+    const current = await ghReadDataJson();
+    const dados = current?.data || {};
+    dados.relatorios = (dados.relatorios || []).filter(r => r.id !== id);
+    dados.ultimaAtualizacao = new Date().toISOString();
 
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const hdrs = await ghHeaders();
+    if (!hdrs) return false;
 
-    return true;
-  } catch (e) {
+    const body = {
+      message: `relatório removido — ${id}`,
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2)))),
+      branch: 'main'
+    };
+    if (current?.sha) body.sha = current.sha;
+
+    const res = await fetch(`${GH_API}/repos/${store.ghRepo}/contents/${GH_HISTORY_PATH}`,
+      { method: 'PUT', headers: hdrs, body: JSON.stringify(body) });
+
+    return res.ok;
+  } catch(e) {
     console.error('Erro ao deletar relatório:', e);
     return false;
   }
