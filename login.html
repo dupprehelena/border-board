@@ -152,7 +152,7 @@
   function checkAuth() {
     const auth = sessionStorage.getItem('border_auth');
     if (auth === 'true') {
-      window.location.href = '/index.html';
+      window.location.href = 'index.html';
     }
   }
 
@@ -166,7 +166,7 @@
     // Credenciais corretas
     if (username === 'border' && password === 'soeusei2026!') {
       sessionStorage.setItem('border_auth', 'true');
-      window.location.href = '/index.html';
+      window.location.href = 'index.html';
     } else {
       errorMsg.classList.add('show');
       document.getElementById('password').value = '';
