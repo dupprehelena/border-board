@@ -2346,23 +2346,38 @@ async function seedHistoryFromFile() {
     const h = await res.json();
 
     // Injeta bi_versions (histórico genérico: concorrentes, crescimento, tendências, pauta)
+    // Merge por id — adiciona novas entradas sem sobrescrever dados existentes do usuário
     if (h.bi_versions) {
       const existing = JSON.parse(localStorage.getItem(VER_KEY) || '{}');
       let changed = false;
       for (const [panelId, versions] of Object.entries(h.bi_versions)) {
-        if (!existing[panelId] || existing[panelId].length === 0) {
-          existing[panelId] = versions;
-          changed = true;
+        if (!existing[panelId]) existing[panelId] = [];
+        const existingIds = new Set(existing[panelId].map(v => v.id));
+        for (const v of versions) {
+          if (!existingIds.has(v.id)) {
+            existing[panelId].push(v);
+            changed = true;
+          }
         }
+        if (changed) existing[panelId].sort((a, b) => b.id - a.id);
       }
       if (changed) localStorage.setItem(VER_KEY, JSON.stringify(existing));
     }
 
-    // Injeta bi_swot_history
+    // Injeta bi_swot_history — merge por id
     if (h.bi_swot_history && h.bi_swot_history.length > 0) {
       const existingSwot = JSON.parse(localStorage.getItem('bi_swot_history') || '[]');
-      if (existingSwot.length === 0) {
-        localStorage.setItem('bi_swot_history', JSON.stringify(h.bi_swot_history));
+      const existingSwotIds = new Set(existingSwot.map(s => s.id));
+      let swotChanged = false;
+      for (const s of h.bi_swot_history) {
+        if (!existingSwotIds.has(s.id)) {
+          existingSwot.push(s);
+          swotChanged = true;
+        }
+      }
+      if (swotChanged) {
+        existingSwot.sort((a, b) => b.id - a.id);
+        localStorage.setItem('bi_swot_history', JSON.stringify(existingSwot));
       }
     }
 
