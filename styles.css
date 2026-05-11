@@ -608,30 +608,6 @@ body {
   text-transform: uppercase;
 }
 
-.panel-update-footer {
-  margin-top: 56px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.panel-update-label {
-  font-size: 14px;
-  color: var(--dim);
-  letter-spacing: 0.04em;
-}
-
-.panel-update-time {
-  font-size: 14px;
-  color: var(--text);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
 .panel-auto-badge {
   font-size: 14px;
   padding: 3px 10px;
