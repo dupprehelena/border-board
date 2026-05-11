@@ -2219,22 +2219,12 @@ async function loadMonitoringData() {
 
     const m = d.monitoramento || {};
 
-    // ── Cabeçalho — data de atualização ──
-    if(d.lastUpdated) {
-      const dt = new Date(d.lastUpdated + 'T12:00:00');
-      const fmt = dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
-      const updEl = document.getElementById('board-last-updated');
-      const updDate = document.getElementById('board-updated-date');
-      if(updEl) updEl.style.display='';
-      if(updDate) updDate.textContent = fmt;
-    }
 
     // ── Concorrentes ──
     const cc = m.concorrentes;
     if(cc) {
       document.getElementById('mc-loading').style.display = 'none';
       document.getElementById('mc-content').style.display = 'block';
-      setText('mc-date', cc.date || '—');
       setText('mc-summary', cc.summary || '—');
       const cs = cc.companies || {};
       ['class_official','bolovo','welcome_sunny','back_to_eden','the_dust_company','hist'].forEach(function(key) {
@@ -2286,7 +2276,6 @@ async function loadMonitoringData() {
     if(cg) {
       document.getElementById('mg-loading').style.display = 'none';
       document.getElementById('mg-content').style.display = 'block';
-      setText('mg-date', cg.date || '—');
       setText('mg-pulse', cg.pulse || '—');
       const men = cg.mentions || {};
       setText('mg-mentions-total', men.total);
