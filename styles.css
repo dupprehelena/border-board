@@ -78,6 +78,13 @@
   /* Cores adicionais para componentes específicos */
   --color-scale: #7090d0;        /* Decisão: Scale */
   --color-testing: #5B8CDA;      /* Status: Testando */
+  --on-accent: #FFFFFF;          /* Texto sobre fundo --accent */
+  --gold: #C8A030;               /* Destaque editorial / cenário futuro */
+  --gold-soft: #C0A880;          /* Variante suave do gold */
+  --threat: #E07030;             /* Indicador de ameaça em mapas */
+  --tooltip-bg: #1A1A1A;         /* Fundo de tooltips de canvas */
+  --tooltip-border: #3A3A3A;     /* Borda de tooltips de canvas */
+  --tooltip-text: #E0E0E0;       /* Texto de tooltips de canvas */
 
   /* Typography */
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -127,6 +134,13 @@ html.dark {
 
   --color-scale: #7090d0;
   --color-testing: #5B8CDA;
+  --on-accent: #0A0A0A;          /* Em dark, accent é claro → texto preto */
+  --gold: #D4B040;
+  --gold-soft: #D4C098;
+  --threat: #E07030;
+  --tooltip-bg: #1A1A1A;
+  --tooltip-border: #3A3A3A;
+  --tooltip-text: #E0E0E0;
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -1425,7 +1439,7 @@ select option {
 .pos-cenario-btn.active,
 .pos-cenario-btn[aria-pressed="true"] {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--accent);
 }
 
@@ -2909,7 +2923,7 @@ html.dark select {
   cursor: pointer;
   font-family: var(--mono);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   transition: all 0.2s;
 }
 
@@ -2927,7 +2941,7 @@ html.dark select {
 }
 
 .scenario-desc.future {
-  color: #c8a030;
+  color: var(--gold);
   display: none;
 }
 
@@ -2937,45 +2951,6 @@ html.dark select {
 }
 
 /* ── CANVAS SECTIONS ── */
-.canvas-wrap {
-  position: relative;
-  margin: 0 -24px;
-}
-
-.canvas-wrap.pos {
-  margin: 0 -24px;
-}
-
-.canvas-inner {
-  position: relative;
-  width: 100%;
-}
-
-.canvas-canvas {
-  width: 100%;
-  display: block;
-  cursor: crosshair;
-}
-
-.canvas-canvas.chart {
-  cursor: default;
-}
-
-.canvas-tooltip {
-  position: fixed;
-  background: #1a1a1a;
-  border: 1px solid #3a3a3a;
-  padding: 12px 16px;
-  font-size: 13px;
-  color: #e0e0e0;
-  pointer-events: none;
-  display: none;
-  z-index: 999;
-  max-width: 240px;
-  line-height: 1.6;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-}
-
 .canvas-hint {
   margin-top: 10px;
   font-size: 12px;
@@ -2992,11 +2967,11 @@ html.dark select {
 }
 
 .map-reading-key-future {
-  color: #c0a880;
+  color: var(--gold-soft);
 }
 
 .map-reading-key-threat {
-  color: #e07030;
+  color: var(--threat);
 }
 
 /* ── EDIT COMPONENTS ── */
