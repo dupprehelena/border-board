@@ -2931,29 +2931,9 @@ html.dark select {
   display: none;
 }
 
-/* ── POS-MAP SECTION ── */
-.pos-map-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
+/* Helper para .pos-map-title sem margem inferior */
 .pos-map-title-no-margin {
   margin-bottom: 0;
-}
-
-.pos-filters {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.pos-filter-btn {
-  font-size: 12px;
-  padding: 4px 12px;
 }
 
 /* ── CANVAS SECTIONS ── */
