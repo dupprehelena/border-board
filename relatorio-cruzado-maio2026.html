@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análise Cruzada — Border Ltd — Maio 2026</title>
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --border2: #333;
+    --text: #e8e8e8;
+    --text2: #999;
+    --text3: #666;
+    --accent: #f0e040;
+    --accent2: #c8b800;
+    --red: #e05555;
+    --green: #4caf7d;
+    --orange: #e09040;
+    --blue: #5599ee;
+    --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --sp1: 8px; --sp2: 16px; --sp3: 24px; --sp4: 32px; --sp5: 40px; --sp6: 48px;
+    --radius: 8px; --radius2: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.65; }
+
+  .report-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: var(--sp4) var(--sp4) var(--sp3); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp3); flex-wrap: wrap; }
+  .header-brand { display: flex; align-items: center; gap: var(--sp2); }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .header-title { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); }
+  .header-label { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; line-height: 1.2; }
+  .header-meta { text-align: right; }
+  .header-date { font-size: 12px; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; }
+  .header-period { font-size: 13px; color: var(--text2); margin-top: 2px; }
+  .live-badge { display: inline-block; background: #1a2e1a; border: 1px solid var(--green); color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-top: 6px; }
+  .live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-right: 4px; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .section-nav { background: var(--bg); border-bottom: 1px solid var(--border); padding: 0 var(--sp4); position: sticky; top: 90px; z-index: 90; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; }
+  .nav-tab { padding: var(--sp2) var(--sp3); font-size: 13px; font-weight: 500; color: var(--text3); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.15s, border-color 0.15s; text-decoration: none; }
+  .nav-tab:hover { color: var(--text2); }
+  .nav-tab.active { color: var(--accent); border-color: var(--accent); }
+
+  .report-body { max-width: 1100px; margin: 0 auto; padding: var(--sp5) var(--sp4); }
+  .section { margin-bottom: var(--sp6); scroll-margin-top: 150px; }
+  .section-header { margin-bottom: var(--sp3); }
+  .section-number { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; font-family: var(--mono); }
+  .section-title { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+  .section-desc { font-size: 13px; color: var(--text3); margin-top: 4px; }
+
+  .executive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp2); margin-bottom: var(--sp3); }
+  @media (max-width: 680px) { .executive-grid { grid-template-columns: 1fr; } }
+  .exec-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius2); padding: var(--sp3); }
+  .exec-card.highlight { border-color: var(--accent); background: linear-gradient(135deg, #1a1900 0%, var(--surface) 60%); }
+  .exec-card.alert { border-color: var(--red); }
+  .exec-card.caution { border-color: var(--orange); }
+  .exec-card.positive { border-color: var(--green); }
+  .exec-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: var(--sp1); }
+  .exec-value { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); line-height: 1; margin-bottom: 6px; }
+  .exec-value.accent { color: var(--accent); }
+  .exec-value.red { color: var(--red); }
+  .exec-value.green { color: var(--green); }
+  .exec-value.orange { color: var(--orange); }
+  .exec-sub { font-size: 13px; color: var(--text2); line-height: 1.4; }
+
+  .insight-box { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: var(--sp3); margin-bottom: var(--sp2); }
+  .insight-box.red { border-left-color: var(--red); }
+  .insight-box.green { border-left-color: var(--green); }
+  .insight-box.orange { border-left-color: var(--orange); }
+  .insight-box.blue { border-left-color: var(--blue); }
+  .insight-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); margin-bottom: var(--sp1); }
+  .insight-tag.accent-tag { color: var(--accent2); }
+  .insight-tag.red-tag { color: var(--red); }
+  .insight-tag.green-tag { color: var(--green); }
+  .insight-tag.orange-tag { color: var(--orange); }
+  .insight-text { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .insight-text strong { color: var(--accent); font-weight: 600; }
+  .insight-text.red-strong strong { color: var(--red); }
+  .insight-text.green-strong strong { color: var(--green); }
+  .insight-text.orange-strong strong { color: var(--orange); }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: var(--sp3); }
+  .data-table th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); padding: var(--sp1) var(--sp2); border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 10px var(--sp2); border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--surface2); }
+  .col-name { color: var(--text) !important; font-weight: 500; }
+  .col-num { font-family: var(--mono); font-size: 12px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badge-green { background: #1a3a28; color: var(--green); }
+  .badge-red { background: #3a1a1a; color: var(--red); }
+  .badge-orange { background: #3a2a10; color: var(--orange); }
+  .badge-yellow { background: #2a2500; color: var(--accent); }
+  .badge-gray { background: var(--surface2); color: var(--text3); }
+
+  .kpi-row { display: flex; gap: var(--sp2); flex-wrap: wrap; margin-bottom: var(--sp3); }
+  .kpi-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px var(--sp2); display: flex; align-items: center; gap: var(--sp1); }
+  .kpi-pill-val { font-size: 18px; font-weight: 700; font-family: var(--mono); color: var(--text); line-height: 1; }
+  .kpi-pill-val.up { color: var(--green); }
+  .kpi-pill-val.down { color: var(--red); }
+  .kpi-pill-val.warn { color: var(--orange); }
+  .kpi-pill-label { font-size: 11px; color: var(--text3); line-height: 1.35; }
+
+  /* CHART */
+  .chart-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius2); padding: var(--sp3); margin-bottom: var(--sp3); }
+  .chart-title { font-size: 12px; font-weight: 600; color: var(--text2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--sp3); }
+  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 140px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 5px; }
+  .bar-wrap { width: 100%; display: flex; justify-content: center; align-items: flex-end; flex: 1; }
+  .bar { width: 70%; border-radius: 3px 3px 0 0; min-height: 2px; }
+  .bar-val { font-size: 10px; font-family: var(--mono); color: var(--text2); text-align: center; }
+  .bar-label { font-size: 9px; color: var(--text3); text-align: center; white-space: nowrap; }
+  .chart-legend { display: flex; gap: var(--sp3); margin-top: var(--sp2); flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text3); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ACTIONS */
+  .action-list { display: flex; flex-direction: column; gap: var(--sp2); }
+  .action-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--sp3); display: grid; grid-template-columns: 44px 1fr auto; gap: var(--sp2); align-items: start; }
+  .action-num { font-family: var(--mono); font-size: 20px; font-weight: 800; color: var(--accent); line-height: 1; padding-top: 1px; }
+  .action-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .action-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .action-meta { text-align: right; flex-shrink: 0; }
+  .action-priority { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .priority-critica { color: var(--red); }
+  .priority-alta { color: var(--orange); }
+  .priority-media { color: var(--text3); }
+  .action-window { font-size: 11px; color: var(--text3); margin-top: 4px; white-space: nowrap; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: var(--sp4) 0; }
+
+  .report-footer { border-top: 1px solid var(--border); padding: var(--sp4); text-align: center; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; font-size: 12px; color: var(--text3); }
+  .footer-inner a { color: var(--text2); text-decoration: none; }
+  .footer-inner a:hover { color: var(--accent); }
+
+  .callout { background: #1a1900; border: 1px solid var(--accent2); border-radius: var(--radius); padding: var(--sp3); margin-bottom: var(--sp3); }
+  .callout-title { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .callout-text { font-size: 14px; color: var(--text2); line-height: 1.6; }
+  .callout-text strong { color: var(--text); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp2); margin-bottom: var(--sp3); }
+  @media (max-width: 620px) { .two-col { grid-template-columns: 1fr; } }
+
+  .stat-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--sp3); }
+  .stat-val { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; font-family: var(--mono); color: var(--text); line-height: 1; }
+  .stat-val.red { color: var(--red); }
+  .stat-val.green { color: var(--green); }
+  .stat-val.orange { color: var(--orange); }
+  .stat-val.accent { color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--text3); margin-top: 6px; line-height: 1.4; }
+  .stat-sub { font-size: 12px; color: var(--text2); margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="brand-dot"></div>
+      <div>
+        <div class="header-title">Border Ltd · Inteligência de Marca</div>
+        <div class="header-label">Análise Cruzada — Maio 2026</div>
+        <div class="live-badge"><span class="live-dot"></span>Dados Windsor.ai · 14/05/2026</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="header-date">Gerado em 14/05/2026</div>
+      <div class="header-period">Meta Ads · Instagram · GA4 · Search Console</div>
+      <div class="header-period" style="margin-top:2px;">Período: 01/05 → 14/05/2026</div>
+    </div>
+  </div>
+</header>
+
+<nav class="section-nav">
+  <div class="nav-inner">
+    <a class="nav-tab active" href="#executivo">Executivo</a>
+    <a class="nav-tab" href="#meta">Meta Ads</a>
+    <a class="nav-tab" href="#instagram">Instagram</a>
+    <a class="nav-tab" href="#site">Site & SEO</a>
+    <a class="nav-tab" href="#cruzamento">Cruzamento</a>
+    <a class="nav-tab" href="#acoes">Ações</a>
+  </div>
+</nav>
+
+<main class="report-body">
+
+  <!-- 01 EXECUTIVO -->
+  <section class="section" id="executivo">
+    <div class="section-header">
+      <div class="section-number">01 · Pulso Executivo</div>
+      <div class="section-title">O que os dados reais dizem sobre maio</div>
+      <div class="section-desc">Meta Ads, Instagram, GA4 e Search Console — Windsor.ai · 01/05 a 14/05/2026</div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">O problema central — em números</div>
+      <div class="callout-text">
+        As campanhas de Meta Ads rodaram por <strong>3 dias</strong> (01–03/mai) com R$ 297,42 gastos. Nesses 3 dias, o reach médio no Instagram foi de <strong>16.927 contas/dia</strong>. Nos 11 dias seguintes sem anúncios, o reach caiu para <strong>50 contas/dia</strong> — uma queda de <strong>99,7%</strong>. O site teve <strong>40 sessões nesses 3 dias</strong> e apenas <strong>5 sessões nos 11 dias restantes</strong>. A Border não existe publicamente quando as campanhas estão pausadas.
+      </div>
+    </div>
+
+    <div class="executive-grid">
+      <div class="exec-card alert">
+        <div class="exec-label">Dependência de Ads</div>
+        <div class="exec-value red">99,7%</div>
+        <div class="exec-sub">Queda de reach quando as campanhas pausam. Sem base orgânica construída, cada pausa é invisibilidade total.</div>
+      </div>
+      <div class="exec-card highlight">
+        <div class="exec-label">Gasto Meta Ads (01–03/mai)</div>
+        <div class="exec-value accent">R$ 297</div>
+        <div class="exec-sub">Em 3 dias ativos. Custo por sessão no site: R$ 7,44. Campanhas pausadas desde 04/mai — 11 dias sem investimento.</div>
+      </div>
+      <div class="exec-card positive">
+        <div class="exec-label">Seguidores Hoje</div>
+        <div class="exec-value green">326</div>
+        <div class="exec-sub">+40 novos no período (01–13/mai). 37 desses vieram nos 3 dias com ads ativos. Crescimento orgânico: ~3 em 11 dias.</div>
+      </div>
+      <div class="exec-card caution">
+        <div class="exec-label">Sessões Orgânicas no Site</div>
+        <div class="exec-value orange">5</div>
+        <div class="exec-sub">Sessões sem mídia paga em 11 dias (04–14/mai). Sem reviews, sem guia de tamanhos, sem H1 com intenção de busca.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 META ADS -->
+  <section class="section" id="meta">
+    <div class="section-header">
+      <div class="section-number">02 · Meta Ads</div>
+      <div class="section-title">Performance das campanhas — 01 a 03/mai</div>
+      <div class="section-desc">Campanhas ativas apenas nos primeiros 3 dias do período. Pausadas desde 04/mai.</div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-pill">
+        <div class="kpi-pill-val warn">R$ 297</div>
+        <div class="kpi-pill-label">Gasto total<br>3 dias ativos</div>
+      </div>
+      <div class="kpi-pill">
+        <div class="kpi-pill-val">59.253</div>
+        <div class="kpi-pill-label">Impressões<br>totais</div>
+      </div>
+      <div class="kpi-pill">
+        <div class="kpi-pill-val">1.070</div>
+        <div class="kpi-pill-label">Cliques<br>totais</div>
+      </div>
+      <div class="kpi-pill">
+        <div class="kpi-pill-val">56.383</div>
+        <div class="kpi-pill-label">Reach<br>único</div>
+      </div>
+      <div class="kpi-pill">
+        <div class="kpi-pill-val">1,81%</div>
+        <div class="kpi-pill-label">CTR<br>médio</div>
+      </div>
+      <div class="kpi-pill">
+        <div class="kpi-pill-val">R$ 0,28</div>
+        <div class="kpi-pill-label">CPC<br>médio</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Gasto diário — Meta Ads (R$)</div>
+      <div class="bar-chart">
+        <div class="bar-col">
+          <div class="bar-val">R$121</div>
+          <div class="bar-wrap"><div class="bar" style="height:100%; background:var(--accent); opacity:0.7;"></div></div>
+          <div class="bar-label">01/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">R$105</div>
+          <div class="bar-wrap"><div class="bar" style="height:87%; background:var(--accent); opacity:0.7;"></div></div>
+          <div class="bar-label">02/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">R$71</div>
+          <div class="bar-wrap"><div class="bar" style="height:59%; background:var(--accent); opacity:0.7;"></div></div>
+          <div class="bar-label">03/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">R$0</div>
+          <div class="bar-wrap"><div class="bar" style="height:1%; background:var(--surface2);"></div></div>
+          <div class="bar-label">04/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">R$0</div>
+          <div class="bar-wrap"><div class="bar" style="height:1%; background:var(--surface2);"></div></div>
+          <div class="bar-label">05/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">R$0</div>
+          <div class="bar-wrap"><div class="bar" style="height:1%; background:var(--surface2);"></div></div>
+          <div class="bar-label">06/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">R$0</div>
+          <div class="bar-wrap"><div class="bar" style="height:1%; background:var(--surface2);"></div></div>
+          <div class="bar-label">07/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">R$0</div>
+          <div class="bar-wrap"><div class="bar" style="height:1%; background:var(--surface2);"></div></div>
+          <div class="bar-label">08+</div>
+        </div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent); opacity:0.7;"></div>Gasto ativo</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--surface2);"></div>Pausado</div>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Campanha</th>
+          <th>Objetivo</th>
+          <th>Gasto (3d)</th>
+          <th>Performance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-name">CAMPANHA 1 — Reconhecimento IG</td>
+          <td>Visitas ao perfil</td>
+          <td class="col-num">R$ 94,63</td>
+          <td>494 visitas ao perfil · CPA R$ 0,19</td>
+        </tr>
+        <tr>
+          <td class="col-name">CAMPANHA 2 — Vendas</td>
+          <td>Add to cart</td>
+          <td class="col-num">R$ 61,86</td>
+          <td>Sem add-to-carts registrados no pixel</td>
+        </tr>
+        <tr>
+          <td class="col-name">Post impulsionado · "design autoral"</td>
+          <td>Link clicks</td>
+          <td class="col-num">R$ 50,56</td>
+          <td>336 cliques · CPC R$ 0,15 · CTR 2,97%</td>
+        </tr>
+        <tr>
+          <td class="col-name">Post impulsionado · "Se você não se vê"</td>
+          <td>Link clicks</td>
+          <td class="col-num">R$ 81,37</td>
+          <td>68 cliques · CPC R$ 1,20 — pior ROI</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box orange">
+      <div class="insight-tag orange-tag">Alerta — Campanha de Vendas sem resultado</div>
+      <div class="insight-text orange-strong">
+        A <strong>CAMPANHA 2 (Vendas)</strong> rodou com objetivo de add-to-cart e gastou R$ 61,86 em 3 dias sem registrar nenhuma conversão. O pixel está configurado para <code>offsite_conversion.fb_pixel_add_to_cart</code> mas não há valores retornados. Pode ser problema de pixel, de landing page, ou de oferta. Precisa investigar antes de reativar.
+      </div>
+    </div>
+
+    <div class="insight-box green">
+      <div class="insight-tag green-tag">Melhor performer — Post "design autoral"</div>
+      <div class="insight-text green-strong">
+        O post impulsionado "design autoral brasileiro para..." teve o <strong>melhor CPC do período: R$ 0,15</strong> com CTR de 2,97% — quase o dobro da média da conta. É o conteúdo com linguagem mais direta de produto. Referência para próximos criativos.
+      </div>
+    </div>
+
+    <div class="insight-box red">
+      <div class="insight-tag red-tag">Pior performer — "Se você não se vê"</div>
+      <div class="insight-text red-strong">
+        Post "Se você não se vê nas..." teve <strong>CPC de R$ 1,20</strong> — 4x mais caro que o melhor criativo. Messaging emocional/identitário performa muito pior que conteúdo de produto direto para esse objetivo de conversão.
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 INSTAGRAM -->
+  <section class="section" id="instagram">
+    <div class="section-header">
+      <div class="section-number">03 · Instagram</div>
+      <div class="section-title">Perfil @border.ltd — crescimento e engajamento</div>
+      <div class="section-desc">Dados orgânicos + impacto dos anúncios · 01/05 a 14/05/2026</div>
+    </div>
+
+    <div class="two-col">
+      <div class="stat-block">
+        <div class="stat-val green">326</div>
+        <div class="stat-label">Seguidores hoje (14/05)</div>
+        <div class="stat-sub">+40 no período · 37 vieram via ads (01–03/mai)</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-val red">50</div>
+        <div class="stat-label">Reach médio/dia sem ads (04–14/mai)</div>
+        <div class="stat-sub">vs 16.927/dia com ads ativos — queda de 99,7%</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Reach diário — Instagram (contas alcançadas)</div>
+      <div class="bar-chart">
+        <div class="bar-col">
+          <div class="bar-val" style="font-size:9px">18.670</div>
+          <div class="bar-wrap"><div class="bar" style="height:100%; background:var(--accent); opacity:0.7;"></div></div>
+          <div class="bar-label">01/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val" style="font-size:9px">17.892</div>
+          <div class="bar-wrap"><div class="bar" style="height:96%; background:var(--accent); opacity:0.7;"></div></div>
+          <div class="bar-label">02/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val" style="font-size:9px">14.219</div>
+          <div class="bar-wrap"><div class="bar" style="height:76%; background:var(--accent); opacity:0.7;"></div></div>
+          <div class="bar-label">03/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">6</div>
+          <div class="bar-wrap"><div class="bar" style="height:0.5%; background:var(--red); opacity:0.5;"></div></div>
+          <div class="bar-label">04/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">294</div>
+          <div class="bar-wrap"><div class="bar" style="height:1.6%; background:var(--red); opacity:0.5;"></div></div>
+          <div class="bar-label">05/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">104</div>
+          <div class="bar-wrap"><div class="bar" style="height:0.6%; background:var(--red); opacity:0.5;"></div></div>
+          <div class="bar-label">06/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">19</div>
+          <div class="bar-wrap"><div class="bar" style="height:0.1%; background:var(--red); opacity:0.5;"></div></div>
+          <div class="bar-label">07/mai</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val">~10</div>
+          <div class="bar-wrap"><div class="bar" style="height:0.1%; background:var(--red); opacity:0.5;"></div></div>
+          <div class="bar-label">08–14</div>
+        </div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent); opacity:0.7;"></div>Com Meta Ads ativos</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red); opacity:0.5;"></div>Apenas orgânico</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:13px; color:var(--text2); font-weight:600; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:var(--sp2);">Posts publicados no período</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Conteúdo</th>
+          <th>Tipo</th>
+          <th>Reach</th>
+          <th>Engajamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-num">05/mai</td>
+          <td class="col-name">"slow days • short movie 01 • border;crew"</td>
+          <td><span class="badge badge-yellow">REELS</span></td>
+          <td class="col-num">176</td>
+          <td>26 interações · 1 share</td>
+        </tr>
+        <tr>
+          <td class="col-num">05/mai</td>
+          <td class="col-name">"dias lentos, café quente..." (collab UGC)</td>
+          <td><span class="badge badge-yellow">REELS</span></td>
+          <td class="col-num">98</td>
+          <td>0 interações</td>
+        </tr>
+        <tr>
+          <td class="col-num">06/mai</td>
+          <td class="col-name">"Todos os projetos que mais me orgulham..." (Helena founders)</td>
+          <td><span class="badge badge-yellow">REELS</span></td>
+          <td class="col-num">103</td>
+          <td>0 interações</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box">
+      <div class="insight-tag accent-tag">Melhor post orgânico — "slow days • border;crew"</div>
+      <div class="insight-text">
+        O reel "slow days" foi o de melhor performance orgânica: <strong>176 de reach, 26 interações, 1 share</strong>. É conteúdo de estética de produto + cultura — sem copy de vendas, sem texto identitário longo. Esse formato funciona melhor. O reel founders (06/mai) com texto emocional longo teve reach similar (103) e zero interações.
+      </div>
+    </div>
+
+    <div class="insight-box red">
+      <div class="insight-tag red-tag">Dependência estrutural confirmada</div>
+      <div class="insight-text red-strong">
+        Em 11 dias sem ads (04–14/mai), a conta acumulou <strong>37 novos seguidores via ads nos primeiros 3 dias e apenas 3 nos 11 seguintes</strong>. O algoritmo do Instagram não distribui conteúdo da Border para não-seguidores sem amplificação paga. A base de 326 seguidores é pequena demais para gerar massa crítica orgânica.
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 SITE & SEO -->
+  <section class="section" id="site">
+    <div class="section-header">
+      <div class="section-number">04 · Site & SEO</div>
+      <div class="section-title">GA4 + Search Console — tráfego real</div>
+      <div class="section-desc">Sessões, fontes e visibilidade orgânica · 01/05 a 14/05/2026</div>
+    </div>
+
+    <div class="two-col">
+      <div class="stat-block">
+        <div class="stat-val orange">45</div>
+        <div class="stat-label">Sessões totais no período</div>
+        <div class="stat-sub">40 nos 3 dias com ads · 5 nos 11 dias sem</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-val red">R$ 7,44</div>
+        <div class="stat-label">Custo por sessão (via ads)</div>
+        <div class="stat-sub">R$ 297 ÷ 40 sessões pagas · sem dado de conversão</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:13px; color:var(--text2); font-weight:600; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:var(--sp2);">Fontes de tráfego — 01 a 14/mai</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Fonte / Meio</th>
+          <th>Sessões</th>
+          <th>% do total</th>
+          <th>Período</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-name">Instagram / paid</td>
+          <td class="col-num">17</td>
+          <td>38%</td>
+          <td>01–03/mai</td>
+        </tr>
+        <tr>
+          <td class="col-name">Facebook / paid</td>
+          <td class="col-num">11</td>
+          <td>24%</td>
+          <td>01–03/mai</td>
+        </tr>
+        <tr>
+          <td class="col-name">(direct) / (none)</td>
+          <td class="col-num">10</td>
+          <td>22%</td>
+          <td>01–03/mai + 10/mai</td>
+        </tr>
+        <tr>
+          <td class="col-name">Google / organic</td>
+          <td class="col-num">2</td>
+          <td>4%</td>
+          <td>03/mai + 10/mai</td>
+        </tr>
+        <tr>
+          <td class="col-name">Ads Manager / referral</td>
+          <td class="col-num">2</td>
+          <td>4%</td>
+          <td>04–05/mai</td>
+        </tr>
+        <tr>
+          <td class="col-name">linktr.ee / referral</td>
+          <td class="col-num">1</td>
+          <td>2%</td>
+          <td>14/mai</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box">
+      <div class="insight-tag accent-tag">Search Console — visibilidade orgânica</div>
+      <div class="insight-text">
+        A única query com impressões no período foi <strong>"www.borderltd.com.br"</strong> — busca de marca direta. 2 impressões por aparição, <strong>0 cliques</strong>, posição 6. Nenhuma impressão para termos de produto ou nicho (street alfaiataria, roupa sem gênero, moda independente SP). A indexação existe mas não há captura de intenção de busca transacional.
+      </div>
+    </div>
+
+    <div class="insight-box red">
+      <div class="insight-tag red-tag">O funil não fecha</div>
+      <div class="insight-text red-strong">
+        R$ 7,44 por sessão paga + site sem reviews + site sem guia de tamanhos = <strong>custo de aquisição sem conversão rastreável</strong>. A Campanha 2 (Vendas) gastou R$ 61,86 com zero add-to-carts registrados. Ou o pixel está com problema, ou o site está perdendo usuários antes da ação. Sem isso resolvido, cada real investido em ads vai para um balde furado.
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 CRUZAMENTO -->
+  <section class="section" id="cruzamento">
+    <div class="section-header">
+      <div class="section-number">05 · Cruzamento de Dados</div>
+      <div class="section-title">O que Meta Ads + Instagram + GA4 dizem juntos</div>
+      <div class="section-desc">Correlações entre os canais — insights que só aparecem cruzando as fontes</div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-tag accent-tag">Cruzamento 1 — Ads ligam, orgânico não existe</div>
+      <div class="insight-text">
+        Quando os ads estavam ativos (01–03/mai): reach IG ~17K/dia, sessões no site ~13/dia, +12 seguidores/dia. Quando pausaram (04–14/mai): reach ~50/dia, sessões no site ~0,5/dia, +0,3 seguidores/dia. <strong>A correlação é 1:1 — a Border só existe digitalmente quando está pagando para existir.</strong> Isso é o diagnóstico principal do mês.
+      </div>
+    </div>
+
+    <div class="insight-box orange">
+      <div class="insight-tag orange-tag">Cruzamento 2 — Qual criativo de ads gera mais resultado real</div>
+      <div class="insight-text orange-strong">
+        Post impulsionado "design autoral brasileiro": CPC R$ 0,15, CTR 2,97%. Post "Se você não se vê nas...": CPC R$ 1,20, CTR 2,05%. <strong>Conteúdo de produto direto (estética + peça) converte 8x melhor em custo</strong> que conteúdo identitário emocional. Isso não significa abandonar o storytelling — significa separar os objetivos: branding orgânico usa a voz, conversão paga usa o produto.
+      </div>
+    </div>
+
+    <div class="insight-box green">
+      <div class="insight-tag green-tag">Cruzamento 3 — O orgânico que funciona: "slow days"</div>
+      <div class="insight-text green-strong">
+        O único reel orgânico com engajamento real (26 interações, 1 share, reach 176) foi o "slow days • border;crew" — <strong>estética de produto + cultura + sem copy de venda</strong>. É o formato que mais se aproxima do que os algoritmos distribuem organicamente. É também o mais difícil de escalar — mas é o que constrói base real.
+      </div>
+    </div>
+
+    <div class="insight-box red">
+      <div class="insight-tag red-tag">Cruzamento 4 — O pixel de vendas está mentindo ou quebrado</div>
+      <div class="insight-text red-strong">
+        Campanha 2 (objetivo vendas): R$ 61,86 gastos, 0 add-to-carts. Mas o GA4 mostra sessões chegando via ig/paid e fb/paid nesses dias. <strong>Alguém chegou no site — mas o pixel não registrou nenhuma ação.</strong> Ou o pixel de add-to-cart não está disparando corretamente, ou os usuários estão saindo antes de interagir com produtos. Isso precisa ser auditado urgente antes de qualquer novo gasto com objetivo de conversão.
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">A equação do momento</div>
+      <div class="callout-text">
+        Inverno 2026 é o melhor momento de produto para a Border (alfaiataria desconstruída dominando editorial). Meta Ads estão <strong>11 dias pausados</strong>. O orgânico sozinho não sustenta nem 100 contas alcançadas por dia. O pixel de conversão provavelmente está quebrado. Cada dia parado é um dia de janela de temporada perdido — mas religar os ads com o pixel quebrado é dinheiro no ralo. <strong>A sequência correta: corrigir pixel → religar Campanha 1 (reconhecimento) com criativo de produto → Campanha 2 apenas depois de confirmar o pixel funcionando.</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 AÇÕES -->
+  <section class="section" id="acoes">
+    <div class="section-header">
+      <div class="section-number">06 · Ações Prioritárias</div>
+      <div class="section-title">O que fazer agora — em ordem</div>
+      <div class="section-desc">Baseado nos dados reais do Windsor.ai · 14/05/2026</div>
+    </div>
+
+    <div class="action-list">
+
+      <div class="action-item">
+        <div class="action-num">01</div>
+        <div>
+          <div class="action-title">Auditar e corrigir o pixel de add-to-cart</div>
+          <div class="action-desc">Campanha 2 gastou R$ 61,86 com zero conversões registradas — enquanto sessões chegavam no site. O pixel provavelmente não está disparando corretamente. Verificar via Facebook Pixel Helper ou Events Manager. Não reativar Campanha 2 (vendas) antes disso estar confirmado.</div>
+        </div>
+        <div class="action-meta">
+          <div class="action-priority priority-critica">Crítica</div>
+          <div class="action-window">Hoje</div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-num">02</div>
+        <div>
+          <div class="action-title">Religar Campanha 1 (Reconhecimento) com criativo de produto</div>
+          <div class="action-desc">As campanhas estão pausadas há 11 dias — o inverno está em pico de busca agora. Religar a Campanha 1 com criativos de estética de produto (estilo "design autoral brasileiro" — CPC R$ 0,15, CTR 2,97%). Evitar criativos identitários emocionais para objetivo de cliques — eles custam 8x mais.</div>
+        </div>
+        <div class="action-meta">
+          <div class="action-priority priority-critica">Crítica</div>
+          <div class="action-window">Esta semana</div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-num">03</div>
+        <div>
+          <div class="action-title">Adicionar guia de tamanhos nas páginas de produto</div>
+          <div class="action-desc">R$ 7,44 por sessão paga + sem guia de tamanhos = abandono por insegurança de fit. Especialmente crítico para peças boxy/oversized onde o cliente não tem referência. Cada sessão comprada que vai embora sem converter é desperdício direto do orçamento de mídia.</div>
+        </div>
+        <div class="action-meta">
+          <div class="action-priority priority-alta">Alta</div>
+          <div class="action-window">Esta semana</div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-num">04</div>
+        <div>
+          <div class="action-title">Publicar conteúdo orgânico no formato "slow days"</div>
+          <div class="action-desc">O reel "slow days • border;crew" foi o único com engajamento real orgânico (26 interações, 1 share). Formato: estética de produto + cultura, sem copy de venda explícita. Publicar 3x por semana nesse formato enquanto as campanhas estão pausadas — é o único canal de reach funcionando agora sem custo.</div>
+        </div>
+        <div class="action-meta">
+          <div class="action-priority priority-alta">Alta</div>
+          <div class="action-window">Agora</div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-num">05</div>
+        <div>
+          <div class="action-title">Ativar sistema de avaliações de produto</div>
+          <div class="action-desc">Sem reviews, o usuário pago (R$ 7,44/sessão) chega numa página sem prova social para uma marca nova. É o elemento de conversão mais impactante que falta. Implementar via NuvemShop (app nativo) e enviar pedido de avaliação para clientes existentes.</div>
+        </div>
+        <div class="action-meta">
+          <div class="action-priority priority-alta">Alta</div>
+          <div class="action-window">Esta semana</div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-num">06</div>
+        <div>
+          <div class="action-title">Construir base orgânica antes do inverno acabar</div>
+          <div class="action-desc">A janela de tendência (#streetalfaiataria +23% no Trends, alfaiataria desconstruída dominando OI 2026) fecha em julho/agosto. Com 326 seguidores e dependência de 99,7% de ads para qualquer reach, a Border precisa crescer a base orgânica agora. Meta mínima: dobrar para 650 antes do fim de junho via conteúdo consistente + eventual UGC com microinfluenciadores queer masc SP.</div>
+        </div>
+        <div class="action-meta">
+          <div class="action-priority priority-alta">Alta</div>
+          <div class="action-window">Mai–Jun</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <div style="text-align:center; padding:var(--sp4) 0; color:var(--text3); font-size:12px;">
+    <div style="font-size:13px; color:var(--text2); font-weight:500; margin-bottom:4px;">Análise Cruzada — Border Ltd · Maio 2026</div>
+    <div>Fontes: Windsor.ai · Meta Ads (conta 232940977) · Instagram (@border.ltd) · GA4 (prop. 526699317) · Search Console (borderltd.com.br)</div>
+    <div style="margin-top:var(--sp2);">
+      <a href="https://sparkling-gaufre-a6e3a1.netlify.app" style="color:var(--text2); text-decoration:none;">← Voltar ao Board</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="report-footer">
+  <div class="footer-inner">
+    Border Ltd · Inteligência de Marca &nbsp;·&nbsp; <a href="https://sparkling-gaufre-a6e3a1.netlify.app">sparkling-gaufre-a6e3a1.netlify.app</a>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tabs.forEach(tab => tab.classList.toggle('active', tab.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-15% 0px -75% 0px' });
+  sections.forEach(s => observer.observe(s));
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelector(tab.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
