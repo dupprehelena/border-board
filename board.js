@@ -1329,6 +1329,15 @@ function acGo(id, el){
   if(el) el.classList.add('active');
 }
 
+// ac2Go(): alterna entre os sub-painéis do relatório mai14 (ac2-overview, etc.)
+function ac2Go(id, el){
+  document.querySelectorAll('#p-analise-cruzada-mai14 .ac-sub').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#p-analise-cruzada-mai14 .ac-tab').forEach(t=>t.classList.remove('active'));
+  const target = document.getElementById(id);
+  if(target) target.classList.add('active');
+  if(el) el.classList.add('active');
+}
+
 // ── MOBILE SIDEBAR ──
 function openSidebar(){
   document.getElementById('sidebar').classList.add('open');
