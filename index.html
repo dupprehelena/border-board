@@ -39,7 +39,7 @@
     window.location.href = '/login.html';
   }
 </script>
-<script>window.DEPLOY_TIMESTAMP="18/05/2026 20:32";</script>
+<script>window.DEPLOY_TIMESTAMP="18/05/2026 21:50";</script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Pular para o conteúdo</a>
@@ -115,6 +115,7 @@
       <button class="nav-accordion-chevron" onclick="toggleAccordion('relatorios')" aria-label="Expandir Relatórios">›</button>
     </div>
     <div class="nav-accordion-body" id="acc-relatorios">
+      <button class="nav-item" data-panel="windsor-mai18" onclick="go('windsor-mai18',this)"><span class="dot"></span>Windsor · Custo + Projeção · 18/Mai/26</button>
       <button class="nav-item" data-panel="analise-cruzada-mai14" onclick="go('analise-cruzada-mai14',this)"><span class="dot"></span>Análise Cruzada · 14/Mai/26</button>
       <button class="nav-item" data-panel="analise-cruzada" onclick="go('analise-cruzada',this)"><span class="dot"></span>Análise Cruzada · Abr–Mai/26</button>
     </div>
@@ -4258,6 +4259,377 @@
   </div>
 
 </div><!-- /p-metaads -->
+
+<!-- ══════════════════════════════════════
+     WINDSOR · CUSTO + PROJEÇÃO — 18 MAI/26
+══════════════════════════════════════ -->
+<div class="panel" id="p-windsor-mai18">
+  <div class="panel-header">
+    <h2 class="panel-title">Custo em ADS + Projeção de Seguidores <span style="color:var(--accent);font-size:14px;font-weight:400;letter-spacing:.06em;margin-left:8px">· Windsor.ai</span></h2>
+    <div class="panel-sub">28 abr – 4 mai 2026 · Meta Ads · Instagram · dados Windsor.ai em tempo real</div>
+  </div>
+
+  <style>
+    /* ── estilos locais deste painel ── */
+    #p-windsor-mai18 .w-section-label {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin: 28px 0 16px;
+    }
+    #p-windsor-mai18 .w-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    #p-windsor-mai18 .w-kpi {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    #p-windsor-mai18 .w-kpi-label {
+      font-size: 11px;
+      color: var(--sub);
+      letter-spacing: .05em;
+      margin-bottom: 6px;
+    }
+    #p-windsor-mai18 .w-kpi-val {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1;
+    }
+    #p-windsor-mai18 .w-kpi-sub {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 4px;
+    }
+    #p-windsor-mai18 .w-kpi-val.green { color: var(--green); }
+    #p-windsor-mai18 .w-kpi-val.accent { color: var(--accent); }
+    #p-windsor-mai18 .w-kpi-val.yellow { color: var(--yellow, #f5c842); }
+
+    #p-windsor-mai18 .w-camp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    #p-windsor-mai18 .w-camp-table th {
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--sub);
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    #p-windsor-mai18 .w-camp-table td {
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--fg);
+      vertical-align: top;
+    }
+    #p-windsor-mai18 .w-camp-table tr:last-child td { border-bottom: none; }
+    #p-windsor-mai18 .w-camp-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+    #p-windsor-mai18 .w-camp-table .camp-name { font-weight: 500; color: var(--fg); }
+    #p-windsor-mai18 .w-camp-table .badge-top { background: var(--accent); color: #fff; border-radius: 4px; font-size: 10px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+    #p-windsor-mai18 .w-camp-table .badge-warn { background: var(--border2); color: var(--sub); border-radius: 4px; font-size: 10px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+
+    #p-windsor-mai18 .w-proj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 4px;
+    }
+    #p-windsor-mai18 .w-proj-card {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    #p-windsor-mai18 .w-proj-card.highlight {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 6%, var(--bg3));
+    }
+    #p-windsor-mai18 .w-proj-cenario {
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--sub);
+      margin-bottom: 8px;
+    }
+    #p-windsor-mai18 .w-proj-val {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    #p-windsor-mai18 .w-proj-val.accent { color: var(--accent); }
+    #p-windsor-mai18 .w-proj-desc {
+      font-size: 12px;
+      color: var(--dim);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    #p-windsor-mai18 .w-insight-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+    #p-windsor-mai18 .w-insight-item { display: flex; gap: 12px; align-items: flex-start; }
+    #p-windsor-mai18 .w-insight-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    #p-windsor-mai18 .w-insight-body { font-size: 13px; color: var(--fg); line-height: 1.55; }
+    #p-windsor-mai18 .w-insight-body strong { color: var(--fg); font-weight: 600; }
+    #p-windsor-mai18 .w-insight-body span.sub { color: var(--sub); font-size: 12px; }
+
+    #p-windsor-mai18 .w-followers-bar {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 4px;
+    }
+    #p-windsor-mai18 .w-bar-track {
+      background: var(--border2);
+      border-radius: 100px;
+      height: 10px;
+      position: relative;
+      margin: 10px 0;
+    }
+    #p-windsor-mai18 .w-bar-fill {
+      background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 70%, var(--green)));
+      border-radius: 100px;
+      height: 100%;
+      width: 53.7%; /* 322/600 */
+    }
+    #p-windsor-mai18 .w-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 4px;
+    }
+  </style>
+
+  <!-- ① KPIs GERAIS -->
+  <div class="w-section-label">Resumo geral — 28 abr a 4 mai 2026 · Meta Ads</div>
+  <div class="w-kpi-grid">
+    <div class="w-kpi">
+      <div class="w-kpi-label">Total investido</div>
+      <div class="w-kpi-val accent">R$ 600</div>
+      <div class="w-kpi-sub">28 abr – 4 mai · todas campanhas</div>
+    </div>
+    <div class="w-kpi">
+      <div class="w-kpi-label">Impressões</div>
+      <div class="w-kpi-val">96.666</div>
+      <div class="w-kpi-sub">CPM médio R$ 6,21</div>
+    </div>
+    <div class="w-kpi">
+      <div class="w-kpi-label">Alcance</div>
+      <div class="w-kpi-val">91.522</div>
+      <div class="w-kpi-sub">pessoas únicas atingidas</div>
+    </div>
+    <div class="w-kpi">
+      <div class="w-kpi-label">Cliques totais</div>
+      <div class="w-kpi-val">1.720</div>
+      <div class="w-kpi-sub">CTR médio 1,78%</div>
+    </div>
+    <div class="w-kpi">
+      <div class="w-kpi-label">CPC médio</div>
+      <div class="w-kpi-val green">R$ 0,35</div>
+      <div class="w-kpi-sub">muito abaixo do benchmark BR</div>
+    </div>
+    <div class="w-kpi">
+      <div class="w-kpi-label">Seguidores atuais</div>
+      <div class="w-kpi-val">322</div>
+      <div class="w-kpi-sub">@border.ltd · 18/mai/2026</div>
+    </div>
+  </div>
+
+  <!-- ② CAMPANHA A CAMPANHA -->
+  <div class="w-section-label">Por campanha — eficiência comparada</div>
+  <div style="overflow-x:auto">
+    <table class="w-camp-table">
+      <thead>
+        <tr>
+          <th>Campanha</th>
+          <th class="num">Invest.</th>
+          <th class="num">Alcance</th>
+          <th class="num">Cliques</th>
+          <th class="num">CTR</th>
+          <th class="num">CPC</th>
+          <th class="num">CPM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="camp-name">Reconhecimento IG <span class="badge-top">melhor CPM</span></td>
+          <td class="num">R$ 148</td>
+          <td class="num">60.488</td>
+          <td class="num">819</td>
+          <td class="num">1,31%</td>
+          <td class="num" style="color:var(--green)">R$ 0,18</td>
+          <td class="num" style="color:var(--green)">R$ 2,37</td>
+        </tr>
+        <tr>
+          <td class="camp-name">Post: Design Autoral <span class="badge-top">melhor CTR</span></td>
+          <td class="num">R$ 89</td>
+          <td class="num">14.847</td>
+          <td class="num">504</td>
+          <td class="num" style="color:var(--green)">3,08%</td>
+          <td class="num" style="color:var(--green)">R$ 0,18</td>
+          <td class="num">R$ 5,46</td>
+        </tr>
+        <tr>
+          <td class="camp-name">Post: Para quem constrói</td>
+          <td class="num">R$ 22</td>
+          <td class="num">4.045</td>
+          <td class="num">87</td>
+          <td class="num">2,04%</td>
+          <td class="num">R$ 0,25</td>
+          <td class="num">R$ 5,07</td>
+        </tr>
+        <tr>
+          <td class="camp-name">Vendas <span class="badge-warn">custo alto</span></td>
+          <td class="num">R$ 203</td>
+          <td class="num">7.505</td>
+          <td class="num">222</td>
+          <td class="num">2,62%</td>
+          <td class="num" style="color:var(--dim)">R$ 0,91</td>
+          <td class="num" style="color:var(--dim)">R$ 23,94</td>
+        </tr>
+        <tr>
+          <td class="camp-name">Post: Se você não se vê <span class="badge-warn">pior ROI</span></td>
+          <td class="num">R$ 138</td>
+          <td class="num">4.637</td>
+          <td class="num">88</td>
+          <td class="num">1,76%</td>
+          <td class="num" style="color:var(--dim)">R$ 1,56</td>
+          <td class="num" style="color:var(--dim)">R$ 27,58</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ③ PROGRESSO DE SEGUIDORES -->
+  <div class="w-section-label">Meta de seguidores — progresso atual</div>
+  <div class="w-followers-bar">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <span style="font-size:13px;color:var(--fg);font-weight:600">@border.ltd</span>
+      <span style="font-size:13px;color:var(--accent);font-weight:700">322 / 600 seguidores</span>
+    </div>
+    <div class="w-bar-track">
+      <div class="w-bar-fill"></div>
+    </div>
+    <div class="w-bar-labels">
+      <span>0</span>
+      <span style="color:var(--fg);font-weight:600">322 hoje (53,7%)</span>
+      <span>meta 600</span>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:var(--sub);line-height:1.5">
+      Faltam <strong style="color:var(--fg)">278 seguidores</strong> para atingir a meta. Com a campanha de Reconhecimento gerando o CPM mais barato (R$ 2,37) e CPC de R$ 0,18, esse é o formato mais eficiente para crescimento de base.
+    </div>
+  </div>
+
+  <!-- ④ PROJEÇÃO DE INVESTIMENTO -->
+  <div class="w-section-label">Quanto investir para atingir 600 seguidores</div>
+  <div style="font-size:12px;color:var(--sub);margin-bottom:14px;line-height:1.5">
+    Estimativa baseada no custo por seguidor (CPF) de campanhas de reconhecimento IG para moda indie brasileira. Benchmark de mercado: R$ 1,50–R$ 3,00 por seguidor. Faltam <strong style="color:var(--fg)">278 seguidores</strong>.
+  </div>
+  <div class="w-proj-grid">
+    <div class="w-proj-card">
+      <div class="w-proj-cenario">🟢 Cenário otimista · CPF R$ 1,50</div>
+      <div class="w-proj-val green">R$ 417</div>
+      <div class="w-proj-desc">Se replicar a performance da Campanha Reconhecimento IG, que já demonstrou CPM de R$ 2,37 — abaixo do mercado.</div>
+    </div>
+    <div class="w-proj-card highlight">
+      <div class="w-proj-cenario">🟡 Cenário realista · CPF R$ 2,00</div>
+      <div class="w-proj-val accent">R$ 556</div>
+      <div class="w-proj-desc">Projeção central recomendada. Considera variação natural de CPM e saturação de audiência ao longo do período.</div>
+    </div>
+    <div class="w-proj-card">
+      <div class="w-proj-cenario">🔴 Cenário conservador · CPF R$ 3,00</div>
+      <div class="w-proj-val" style="color:var(--sub)">R$ 834</div>
+      <div class="w-proj-desc">Se o alcance pago saturar ou se a plataforma aumentar os CPMs — comum em períodos sazonais (junho, datas comemorativas).</div>
+    </div>
+  </div>
+
+  <!-- ⑤ PROJEÇÃO DE COMPRADORES -->
+  <div class="w-section-label">Projeção de compradores — 5% de conversão</div>
+  <div class="w-kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr))">
+    <div class="w-kpi">
+      <div class="w-kpi-label">Meta de seguidores</div>
+      <div class="w-kpi-val">600</div>
+      <div class="w-kpi-sub">base alvo</div>
+    </div>
+    <div class="w-kpi">
+      <div class="w-kpi-label">Taxa de conversão</div>
+      <div class="w-kpi-val accent">5%</div>
+      <div class="w-kpi-sub">seguidor → comprador</div>
+    </div>
+    <div class="w-kpi">
+      <div class="w-kpi-label">Compradores esperados</div>
+      <div class="w-kpi-val green">30</div>
+      <div class="w-kpi-sub">ao atingir 600 seguidores</div>
+    </div>
+  </div>
+  <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:16px 18px;margin-top:12px">
+    <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin-bottom:10px">Projeção de receita — 30 compradores</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center">
+      <div>
+        <div style="font-size:11px;color:var(--sub);margin-bottom:4px">Ticket R$ 250</div>
+        <div style="font-size:18px;font-weight:700;color:var(--fg)">R$ 7.500</div>
+      </div>
+      <div style="border-left:1px solid var(--border2);border-right:1px solid var(--border2)">
+        <div style="font-size:11px;color:var(--accent);margin-bottom:4px;font-weight:600">Ticket R$ 400 ← estimado</div>
+        <div style="font-size:22px;font-weight:700;color:var(--accent)">R$ 12.000</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--sub);margin-bottom:4px">Ticket R$ 600</div>
+        <div style="font-size:18px;font-weight:700;color:var(--fg)">R$ 18.000</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--sub);margin-top:10px;text-align:center">
+      Investimento adicional necessário (realista): <strong style="color:var(--fg)">R$ 556</strong> · Potencial de receita: <strong style="color:var(--green)">R$ 12.000</strong> · ROI projetado: <strong style="color:var(--green)">21,6×</strong>
+    </div>
+  </div>
+
+  <!-- ⑥ INSIGHTS -->
+  <div class="w-section-label">O que os dados dizem</div>
+  <ul class="w-insight-list">
+    <li class="w-insight-item">
+      <span class="w-insight-icon">🏆</span>
+      <div class="w-insight-body">
+        <strong>Reconhecimento IG + Post Design Autoral são as campanhas mais eficientes.</strong> CPM de R$ 2,37 e CPC de R$ 0,18 — os menores do período. São os formatos a escalar para crescer seguidores com o menor custo possível.
+        <br><span class="sub">Campanha Vendas e Post "Se você não se vê" tiveram CPM 10× maior com resultado desproporcional.</span>
+      </div>
+    </li>
+    <li class="w-insight-item">
+      <span class="w-insight-icon">⚠️</span>
+      <div class="w-insight-body">
+        <strong>Campanha de Vendas consumiu R$ 203 (34% do total) com o pior custo por alcance.</strong> CPM de R$ 23,94 contra R$ 2,37 da campanha de Reconhecimento. Para uma marca em fase de construção de base, essa proporção está invertida.
+        <br><span class="sub">Enquanto não tiver 1K+ seguidores orgânicos, o investimento em reconhecimento gera mais retorno estrutural que em conversão direta.</span>
+      </div>
+    </li>
+    <li class="w-insight-item">
+      <span class="w-insight-icon">📊</span>
+      <div class="w-insight-body">
+        <strong>R$ 600 investidos geraram 91.522 pessoas únicas alcançadas.</strong> Custo por pessoa alcançada: R$ 0,0066. É barato chegar em gente — o problema é que ainda não existe infraestrutura orgânica para converter esse alcance em seguidores fiéis.
+      </div>
+    </li>
+    <li class="w-insight-item">
+      <span class="w-insight-icon">🎯</span>
+      <div class="w-insight-body">
+        <strong>Para chegar em 600 seguidores: investir entre R$ 417 e R$ 556 adicionais,</strong> 100% focado em campanha de Reconhecimento IG com criativo de Reels (formato "design autoral" teve CTR de 3,08% — o mais alto do período).
+        <br><span class="sub">Com 30 compradores esperados e ticket médio de R$ 400, o ROI projetado é 21,6× sobre o investimento adicional.</span>
+      </div>
+    </li>
+  </ul>
+
+  <div class="update-footer">Dados Windsor.ai · Meta Ads · Instagram · 18/05/2026</div>
+</div>
+<!-- /p-windsor-mai18 -->
 
 <!-- ══════════════════════════════════════
      ANÁLISE CRUZADA — 14 MAI/26 (Windsor.ai)
