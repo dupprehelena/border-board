@@ -39,7 +39,7 @@
     window.location.href = '/login.html';
   }
 </script>
-<script>window.DEPLOY_TIMESTAMP="18/05/2026 21:50";</script>
+<script>window.DEPLOY_TIMESTAMP="18/05/2026 22:30";</script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Pular para o conteúdo</a>
@@ -115,6 +115,7 @@
       <button class="nav-accordion-chevron" onclick="toggleAccordion('relatorios')" aria-label="Expandir Relatórios">›</button>
     </div>
     <div class="nav-accordion-body" id="acc-relatorios">
+      <button class="nav-item" data-panel="diagnostico-conversao" onclick="go('diagnostico-conversao',this)"><span class="dot"></span>Diagnóstico · Por que não converte · 18/Mai/26</button>
       <button class="nav-item" data-panel="windsor-mai18" onclick="go('windsor-mai18',this)"><span class="dot"></span>Windsor · Custo + Projeção · 18/Mai/26</button>
       <button class="nav-item" data-panel="analise-cruzada-mai14" onclick="go('analise-cruzada-mai14',this)"><span class="dot"></span>Análise Cruzada · 14/Mai/26</button>
       <button class="nav-item" data-panel="analise-cruzada" onclick="go('analise-cruzada',this)"><span class="dot"></span>Análise Cruzada · Abr–Mai/26</button>
@@ -4259,6 +4260,449 @@
   </div>
 
 </div><!-- /p-metaads -->
+
+<!-- ══════════════════════════════════════
+     DIAGNÓSTICO · POR QUE NÃO CONVERTE — 18 MAI/26
+══════════════════════════════════════ -->
+<div class="panel" id="p-diagnostico-conversao">
+  <div class="panel-header">
+    <h2 class="panel-title">Por que não converte? <span style="color:var(--accent);font-size:14px;font-weight:400;letter-spacing:.06em;margin-left:8px">· Clarity + Meta Ads + GA4</span></h2>
+    <div class="panel-sub">28–30 abr 2026 · 100 sessões gravadas · diagnóstico completo de funil</div>
+  </div>
+
+  <style>
+    #p-diagnostico-conversao .d-section-label {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin: 28px 0 16px;
+    }
+    #p-diagnostico-conversao .d-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+    }
+    #p-diagnostico-conversao .d-kpi {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    #p-diagnostico-conversao .d-kpi-label {
+      font-size: 11px;
+      color: var(--sub);
+      letter-spacing: .05em;
+      margin-bottom: 6px;
+    }
+    #p-diagnostico-conversao .d-kpi-val {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1;
+    }
+    #p-diagnostico-conversao .d-kpi-val.red  { color: #e05c5c; }
+    #p-diagnostico-conversao .d-kpi-val.green { color: var(--green); }
+    #p-diagnostico-conversao .d-kpi-val.accent{ color: var(--accent); }
+    #p-diagnostico-conversao .d-kpi-sub {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 4px;
+    }
+
+    /* Funil visual */
+    #p-diagnostico-conversao .d-funil {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    #p-diagnostico-conversao .d-funil-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #p-diagnostico-conversao .d-funil-bar-wrap {
+      flex: 1;
+      background: var(--border2);
+      border-radius: 6px;
+      height: 32px;
+      overflow: hidden;
+    }
+    #p-diagnostico-conversao .d-funil-bar {
+      height: 100%;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding-left: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+    }
+    #p-diagnostico-conversao .d-funil-label {
+      font-size: 12px;
+      color: var(--sub);
+      width: 140px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+    #p-diagnostico-conversao .d-funil-num {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--fg);
+      width: 60px;
+      flex-shrink: 0;
+    }
+
+    /* Diagnóstico cards */
+    #p-diagnostico-conversao .d-diag-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    #p-diagnostico-conversao .d-diag-card {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    #p-diagnostico-conversao .d-diag-card.critical {
+      border-color: #e05c5c;
+      background: color-mix(in srgb, #e05c5c 5%, var(--bg3));
+    }
+    #p-diagnostico-conversao .d-diag-icon { font-size: 20px; flex-shrink: 0; }
+    #p-diagnostico-conversao .d-diag-body { flex: 1; }
+    #p-diagnostico-conversao .d-diag-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 6px;
+    }
+    #p-diagnostico-conversao .d-diag-desc {
+      font-size: 13px;
+      color: var(--sub);
+      line-height: 1.6;
+    }
+    #p-diagnostico-conversao .d-diag-desc strong { color: var(--fg); }
+    #p-diagnostico-conversao .d-diag-badge {
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      flex-shrink: 0;
+      height: fit-content;
+    }
+    #p-diagnostico-conversao .d-diag-badge.critical { background: #e05c5c22; color: #e05c5c; }
+    #p-diagnostico-conversao .d-diag-badge.warning  { background: color-mix(in srgb, var(--yellow,#f5c842) 15%, transparent); color: var(--yellow,#f5c842); }
+    #p-diagnostico-conversao .d-diag-badge.info     { background: var(--border2); color: var(--sub); }
+
+    /* Estratégia 30 dias */
+    #p-diagnostico-conversao .d-fase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    #p-diagnostico-conversao .d-fase-card {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    #p-diagnostico-conversao .d-fase-num {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    #p-diagnostico-conversao .d-fase-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 10px;
+    }
+    #p-diagnostico-conversao .d-fase-itens {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    #p-diagnostico-conversao .d-fase-itens li {
+      font-size: 12px;
+      color: var(--sub);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+    #p-diagnostico-conversao .d-fase-itens li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+    }
+    #p-diagnostico-conversao .d-fase-budget {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--sub);
+    }
+    #p-diagnostico-conversao .d-fase-budget strong { color: var(--fg); }
+
+    /* Jornada */
+    #p-diagnostico-conversao .d-jornada {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+    #p-diagnostico-conversao .d-jornada-step {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--sub);
+      text-align: center;
+      min-width: 100px;
+    }
+    #p-diagnostico-conversao .d-jornada-step.active {
+      border-color: var(--accent);
+      color: var(--fg);
+      font-weight: 600;
+    }
+    #p-diagnostico-conversao .d-jornada-step .d-j-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+    #p-diagnostico-conversao .d-jornada-arrow {
+      font-size: 18px;
+      color: var(--border2);
+      padding: 0 6px;
+    }
+    #p-diagnostico-conversao .d-jornada-arrow.active { color: var(--accent); }
+  </style>
+
+  <!-- ① FUNIL REAL -->
+  <div class="d-section-label">O funil real — 28 a 30 abr 2026</div>
+  <div class="d-kpi-grid" style="margin-bottom:20px">
+    <div class="d-kpi">
+      <div class="d-kpi-label">Cliques pagos (Meta)</div>
+      <div class="d-kpi-val">1.720</div>
+      <div class="d-kpi-sub">R$ 600 investidos</div>
+    </div>
+    <div class="d-kpi">
+      <div class="d-kpi-label">Chegaram ao site (GA4)</div>
+      <div class="d-kpi-val red">460</div>
+      <div class="d-kpi-sub">27% dos cliques pagos</div>
+    </div>
+    <div class="d-kpi">
+      <div class="d-kpi-label">Add to cart</div>
+      <div class="d-kpi-val red">~8</div>
+      <div class="d-kpi-sub">1,7% de quem chegou</div>
+    </div>
+    <div class="d-kpi">
+      <div class="d-kpi-label">Compras</div>
+      <div class="d-kpi-val red">0</div>
+      <div class="d-kpi-sub">0% de conversão final</div>
+    </div>
+    <div class="d-kpi">
+      <div class="d-kpi-label">Bounce &lt;30s (Clarity)</div>
+      <div class="d-kpi-val red">91%</div>
+      <div class="d-kpi-sub">100 sessões gravadas</div>
+    </div>
+    <div class="d-kpi">
+      <div class="d-kpi-label">Sessões com clique</div>
+      <div class="d-kpi-val red">2%</div>
+      <div class="d-kpi-sub">2 de 100 interagiram</div>
+    </div>
+  </div>
+
+  <div class="d-funil">
+    <div class="d-funil-row">
+      <div class="d-funil-label">Cliques no anúncio</div>
+      <div class="d-funil-bar-wrap"><div class="d-funil-bar" style="width:100%;background:var(--accent)">1.720</div></div>
+      <div class="d-funil-num">100%</div>
+    </div>
+    <div class="d-funil-row">
+      <div class="d-funil-label">Chegaram ao site</div>
+      <div class="d-funil-bar-wrap"><div class="d-funil-bar" style="width:27%;background:color-mix(in srgb,var(--accent) 70%,#e05c5c)">460</div></div>
+      <div class="d-funil-num" style="color:#e05c5c">27%</div>
+    </div>
+    <div class="d-funil-row">
+      <div class="d-funil-label">Add to cart</div>
+      <div class="d-funil-bar-wrap"><div class="d-funil-bar" style="width:1.7%;background:#e05c5c;min-width:36px">~8</div></div>
+      <div class="d-funil-num" style="color:#e05c5c">0,5%</div>
+    </div>
+    <div class="d-funil-row">
+      <div class="d-funil-label">Compras</div>
+      <div class="d-funil-bar-wrap"><div class="d-funil-bar" style="width:0%;background:#e05c5c;min-width:36px">0</div></div>
+      <div class="d-funil-num" style="color:#e05c5c">0%</div>
+    </div>
+  </div>
+
+  <!-- ② CAUSA RAIZ -->
+  <div class="d-section-label">Causa raiz — o diagnóstico</div>
+  <div class="d-diag-list">
+
+    <div class="d-diag-card critical">
+      <div class="d-diag-icon">🎯</div>
+      <div class="d-diag-body">
+        <div class="d-diag-title">A jornada de compra está pulando etapas</div>
+        <div class="d-diag-desc">
+          O anúncio está tentando converter <strong>primeiro contato → R$ 289</strong>. Essa jornada funciona para marcas conhecidas. Para a Border com 322 seguidores, a pessoa que clica no anúncio ainda não tem confiança suficiente para comprar. Ela precisa conhecer a marca antes — e hoje o anúncio não dá tempo para isso.
+        </div>
+      </div>
+      <div class="d-diag-badge critical">causa principal</div>
+    </div>
+
+    <div class="d-diag-card">
+      <div class="d-diag-icon">📱</div>
+      <div class="d-diag-body">
+        <div class="d-diag-title">99% mobile, comportamento de scroll — não de compra</div>
+        <div class="d-diag-desc">
+          Das 100 sessões gravadas, 99 foram no celular. A mediana de duração foi <strong>1 segundo</strong>. As 4 sessões mais longas (7–19 min) não tiveram nenhum clique — as pessoas ficaram olhando as fotos sem agir. Não é rejeição ao produto: é falta de gatilho de confiança para dar o próximo passo.
+        </div>
+      </div>
+      <div class="d-diag-badge warning">comportamento</div>
+    </div>
+
+    <div class="d-diag-card">
+      <div class="d-diag-icon">💸</div>
+      <div class="d-diag-body">
+        <div class="d-diag-title">Campanha de Vendas consumiu 34% do budget com pior eficiência</div>
+        <div class="d-diag-desc">
+          R$ 203 foram para a campanha de Vendas — CPM de R$ 23,94 contra R$ 2,37 da campanha de Reconhecimento. <strong>10× mais caro por pessoa atingida</strong>, com 0 vendas. O budget de vendas diretas está sendo desperdiçado enquanto a marca ainda está construindo base.
+        </div>
+      </div>
+      <div class="d-diag-badge warning">budget</div>
+    </div>
+
+    <div class="d-diag-card">
+      <div class="d-diag-icon">🔍</div>
+      <div class="d-diag-body">
+        <div class="d-diag-title">Falta prova social visível</div>
+        <div class="d-diag-desc">
+          Sem avaliações, sem UGC (fotos de clientes reais), sem volume de seguidores que sinalize credibilidade. Para uma peça de R$ 289 de uma marca nova, o visitante não tem como verificar se outras pessoas já compraram e aprovaram. <strong>A ausência de prova social é um freio invisível de compra.</strong>
+        </div>
+      </div>
+      <div class="d-diag-badge info">estrutural</div>
+    </div>
+
+  </div>
+
+  <!-- ③ JORNADA CORRETA -->
+  <div class="d-section-label">A jornada real do cliente Border</div>
+  <div style="font-size:13px;color:var(--sub);margin-bottom:14px;line-height:1.6">
+    O anúncio pago está tentando executar a etapa final sem construir as anteriores. O objetivo dos próximos 30 dias é completar as etapas que faltam.
+  </div>
+  <div class="d-jornada">
+    <div class="d-jornada-step">
+      <span class="d-j-icon">📣</span>
+      Descobre via anúncio
+    </div>
+    <div class="d-jornada-arrow active">→</div>
+    <div class="d-jornada-step active">
+      <span class="d-j-icon">👤</span>
+      Segue o perfil
+    </div>
+    <div class="d-jornada-arrow active">→</div>
+    <div class="d-jornada-step active">
+      <span class="d-j-icon">❤️</span>
+      Consome conteúdo
+    </div>
+    <div class="d-jornada-arrow active">→</div>
+    <div class="d-jornada-step active">
+      <span class="d-j-icon">🤝</span>
+      Confia na marca
+    </div>
+    <div class="d-jornada-arrow active">→</div>
+    <div class="d-jornada-step active">
+      <span class="d-j-icon">🛍️</span>
+      Compra
+    </div>
+  </div>
+  <div style="font-size:12px;color:var(--sub);margin-top:10px;padding:10px 14px;background:var(--bg3);border-radius:8px;border:1px solid var(--border2)">
+    ⚠️ Hoje o anúncio executa apenas a primeira etapa e pede a última. As etapas do meio — seguir, consumir, confiar — ainda precisam ser construídas antes que a conversão em venda aconteça de forma consistente.
+  </div>
+
+  <!-- ④ ESTRATÉGIA 30 DIAS -->
+  <div class="d-section-label">Estratégia recomendada — próximos 30 dias</div>
+  <div class="d-fase-grid">
+
+    <div class="d-fase-card">
+      <div class="d-fase-num">⬛ Fase 1 · Semanas 1–2</div>
+      <div class="d-fase-title">Parar vendas diretas. Crescer base.</div>
+      <ul class="d-fase-itens">
+        <li>Desativar campanha de Vendas temporariamente</li>
+        <li>Concentrar 100% do budget em Reconhecimento IG</li>
+        <li>Criativo: Reels com processo, bastidores, identidade — não produto</li>
+        <li>Meta: chegar em 450 seguidores com engajamento real</li>
+      </ul>
+      <div class="d-fase-budget">Budget sugerido: <strong>R$ 200–250</strong> · CPM estimado R$ 2,37</div>
+    </div>
+
+    <div class="d-fase-card">
+      <div class="d-fase-num">🟫 Fase 2 · Semanas 3–4</div>
+      <div class="d-fase-title">Construir prova social.</div>
+      <ul class="d-fase-itens">
+        <li>Enviar peça para 2–3 microinfluenciadores (troca, não $)</li>
+        <li>Pedir foto/vídeo usando — UGC real</li>
+        <li>Publicar nas fotos do produto no site</li>
+        <li>Coletar primeiros depoimentos de quem já comprou</li>
+      </ul>
+      <div class="d-fase-budget">Budget sugerido: <strong>R$ 150</strong> em impulsionar posts com UGC</div>
+    </div>
+
+    <div class="d-fase-card">
+      <div class="d-fase-num">🟧 Fase 3 · Mês 2</div>
+      <div class="d-fase-title">Relançar vendas com base construída.</div>
+      <ul class="d-fase-itens">
+        <li>Reativar campanha de Vendas com criativo de UGC</li>
+        <li>Público: seguidores + lookalike dos engajados</li>
+        <li>Adicionar retargeting para quem visitou o site</li>
+        <li>Meta: 1ª semana com vendas consistentes</li>
+      </ul>
+      <div class="d-fase-budget">Budget sugerido: <strong>R$ 300–400</strong> com público já aquecido</div>
+    </div>
+
+  </div>
+
+  <!-- ⑤ RESUMO EXECUTIVO -->
+  <div class="d-section-label">Resumo executivo</div>
+  <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span style="font-size:13px;color:var(--sub)">O que está errado</span>
+      <span style="font-size:13px;color:var(--fg);font-weight:500;max-width:400px;text-align:right">Pedir compra de R$ 289 no primeiro contato, sem prova social, para audiência fria</span>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span style="font-size:13px;color:var(--sub)">O que não está errado</span>
+      <span style="font-size:13px;color:var(--fg);font-weight:500;max-width:400px;text-align:right">O produto, o preço, o site, o criativo — a sequência da jornada</span>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span style="font-size:13px;color:var(--sub)">Próximo passo imediato</span>
+      <span style="font-size:13px;color:var(--accent);font-weight:600;max-width:400px;text-align:right">Pausar campanha de Vendas · Redirecionar budget para Reconhecimento</span>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span style="font-size:13px;color:var(--sub)">Quando retomar vendas diretas</span>
+      <span style="font-size:13px;color:var(--fg);font-weight:500;max-width:400px;text-align:right">Quando tiver 500+ seguidores, UGC publicado e pelo menos 5 avaliações no site</span>
+    </div>
+  </div>
+
+  <div class="update-footer">Clarity · Meta Ads · GA4 · Windsor.ai · 18/05/2026</div>
+</div>
+<!-- /p-diagnostico-conversao -->
 
 <!-- ══════════════════════════════════════
      WINDSOR · CUSTO + PROJEÇÃO — 18 MAI/26
