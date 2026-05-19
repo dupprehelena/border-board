@@ -1222,7 +1222,7 @@ const ROUTE_MAP = {
   'planejador':            '/negocios/planejador',
   'referencias':           '/negocios/referencias',
   'financeiro':            '/negocios/financeiro',
-  'googleads':             '/negocios/google-ads',
+  'googleads':             '/performance/google-ads',
   'analyzer':              '/ferramentas/caption',
   'brief':                 '/ferramentas/brief',
   'hashgen':               '/ferramentas/hashtags',
@@ -1270,7 +1270,8 @@ const PANEL_ACCORDION_MAP = {
   'metrics':'performance','metaads':'performance','grupo-performance':'performance',
   'analise-cruzada':'relatorios','grupo-relatorios':'relatorios',
   'canvas':'negocios','personas':'negocios','swot':'negocios','competidores':'negocios',
-  'planejador':'negocios','referencias':'negocios','financeiro':'negocios','googleads':'negocios','grupo-negocios':'negocios',
+  'planejador':'negocios','referencias':'negocios','financeiro':'negocios','grupo-negocios':'negocios',
+  'googleads':'performance',
   'analyzer':'ferramentas','brief':'ferramentas','hashgen':'ferramentas','adcopy':'ferramentas',
   'roteiro':'ferramentas','iaassist':'ferramentas','grupo-ferramentas':'ferramentas',
   'tendencias':'tendencias','grupo-tendencias':'tendencias',
@@ -3081,12 +3082,9 @@ const COMP_BRANDS = [
     cardId: 'comp-bolovo',
     posX: 0.62, posY: 0.72,
     ticket: 230, audience: 214000, rigor: 0.30,
-    color: '#999999',
-    colorDim: 'rgba(153,153,153,0.2)',
-    bold: false,
-    tag: 'direto',
-    cenario: 'atual',
-    tooltip: ['Bolovo', 'streetwear · mainstream · 214K', 'Ticket ~R$230 · camisetas/drops', '⚠ Concorrente direto de camisetaria']
+    color: '#999999', colorDim: 'rgba(153,153,153,0.2)',
+    bold: false, tag: 'direto', tipo: ['vendas'], cenario: 'atual',
+    tooltip: ['Bolovo', 'streetwear · mainstream · 214K', 'Ticket ~R$230 · camisetas/drops', '◎ Vendas — disputa o mesmo consumidor']
   },
   {
     id: 'class-official',
@@ -3094,12 +3092,9 @@ const COMP_BRANDS = [
     cardId: 'comp-classofficial',
     posX: 0.72, posY: 0.78,
     ticket: 200, audience: 170000, rigor: 0.28,
-    color: '#999999',
-    colorDim: 'rgba(153,153,153,0.2)',
-    bold: false,
-    tag: 'direto',
-    cenario: 'atual',
-    tooltip: ['Class Official', 'streetwear · mainstream · 170K', 'Ticket ~R$200 · camisetas/estampas', '⚠ Concorrente direto de camisetaria']
+    color: '#999999', colorDim: 'rgba(153,153,153,0.2)',
+    bold: false, tag: 'direto', tipo: ['vendas'], cenario: 'atual',
+    tooltip: ['Class Official', 'streetwear · mainstream · 170K', 'Ticket ~R$200 · camisetas/estampas', '◎ Vendas — mesmo canal, mesmo consumidor']
   },
   {
     id: 'midas-touch',
@@ -3107,38 +3102,29 @@ const COMP_BRANDS = [
     cardId: 'comp-midastouch',
     posX: 0.55, posY: 0.62,
     ticket: 180, audience: 50000, rigor: 0.35,
-    color: '#c8a030',
-    colorDim: 'rgba(200,160,48,0.25)',
-    bold: false,
-    tag: 'direto',
-    cenario: 'atual',
-    tooltip: ['Midas Touch', 'streetwear · RJ · 2018 · ~50K', 'Ticket ~R$180 · gramatura pesada, oversized', '⚠ Concorrente direto — mesmo produto']
+    color: '#c8a030', colorDim: 'rgba(200,160,48,0.25)',
+    bold: false, tag: 'direto', tipo: ['produto', 'vendas'], cenario: 'atual',
+    tooltip: ['Midas Touch', 'streetwear · RJ · 2018 · ~50K', 'Ticket ~R$180 · gramatura pesada, oversized', '⬡ Produto ◎ Vendas']
   },
   {
     id: 'dust-co',
     name: 'Dust Co.',
     cardId: 'comp-dustcompany',
-    posX: 0.68, posY: 0.50,
-    ticket: 280, audience: 154000, rigor: 0.55,
-    color: '#e07030',
-    colorDim: 'rgba(224,112,48,0.25)',
-    bold: true,
-    tag: 'ameaca',
-    cenario: 'atual',
-    tooltip: ['The Dust Company', 'street premium · 154K', 'Ticket ~R$280 · omnichannel robusto', '⚠ Concorrente de produto + modelagem próxima']
+    posX: 0.68, posY: 0.47,
+    ticket: 370, audience: 158000, rigor: 0.62,
+    color: '#e07030', colorDim: 'rgba(224,112,48,0.25)',
+    bold: true, tag: 'direto', tipo: ['produto', 'vendas'], cenario: 'atual',
+    tooltip: ['The Dust Company', 'street premium · 158K · SC', 'Ticket R$339–399 · wide/baggy/flare/carpenter', '⬡ Produto ◎ Vendas — mesmas modelagens, mesmo ticket']
   },
   {
     id: 'welcome-sunny',
     name: 'Welcome Sunny',
     cardId: 'comp-welcomesunny',
     posX: 0.50, posY: 0.55,
-    ticket: 280, audience: 120000, rigor: 0.55,
-    color: '#aaaaaa',
-    colorDim: 'rgba(170,170,170,0.2)',
-    bold: false,
-    tag: 'ameaca',
-    cenario: 'atual',
-    tooltip: ['Welcome Sunny', 'street nicho · fluido · 120K', 'Ticket ~R$280 · collab Hering 2025', 'Valida o nicho no mercado BR']
+    ticket: 280, audience: 123000, rigor: 0.55,
+    color: '#aaaaaa', colorDim: 'rgba(170,170,170,0.2)',
+    bold: false, tag: 'ameaca', tipo: ['produto', 'posicionamento', 'vendas'], cenario: 'atual',
+    tooltip: ['Welcome Sunny', 'street nicho · 123K · collab Hering 07/26', 'Ticket ~R$280 · alfaiataria casual carioca', '⬡ Produto ◈ Posicionamento ◎ Vendas']
   },
   {
     id: 'pace',
@@ -3146,18 +3132,13 @@ const COMP_BRANDS = [
     cardId: 'comp-pace',
     posX: 0.48, posY: 0.45,
     ticket: 260, audience: 42000, rigor: 0.62,
-    color: '#60a878',
-    colorDim: 'rgba(96,168,120,0.2)',
-    bold: false,
-    tag: 'monitorar',
-    cenario: 'atual',
-    tooltip: ['Pace', 'streetwear independente · BR · ~42K', 'Ticket ~R$260 · modelagem ampla', 'Monitorar — público street jovem sobreposto']
+    color: '#60a878', colorDim: 'rgba(96,168,120,0.2)',
+    bold: false, tag: 'monitorar', tipo: ['produto', 'vendas'], cenario: 'atual',
+    tooltip: ['Pace', 'streetwear independente · BR · ~42K', 'Ticket ~R$260 · wide-leg, oversized', '⬡ Produto ◎ Vendas']
   },
 
   // ══════════════════════════════════════════
   // CENÁRIO FUTURO — Border como street alfaiataria
-  // Eixo horizontal: street casual → alfaiataria
-  // Eixo vertical: nicho → mainstream
   // ══════════════════════════════════════════
   {
     id: 'hist',
@@ -3165,12 +3146,9 @@ const COMP_BRANDS = [
     cardId: null,
     posX: 0.52, posY: 0.36,
     ticket: 280, audience: 15000, rigor: 0.78,
-    color: '#c0a880',
-    colorDim: 'rgba(192,168,128,0.25)',
-    bold: true,
-    tag: 'ameaca',
-    cenario: 'futuro',
-    tooltip: ['HIST', 'How I See Things · SP · 2021', 'Ticket ~R$280 · ~15K seg.', 'Loja física: Pinheiros (H550)', '⚠ Maior ameaça no território futuro']
+    color: '#c0a880', colorDim: 'rgba(192,168,128,0.25)',
+    bold: true, tag: 'ameaca', tipo: ['produto', 'posicionamento', 'vendas'], cenario: 'futuro',
+    tooltip: ['HIST', 'How I See Things · SP · 2021 · ~15K', 'Loja física: Pinheiros (H550)', '⬡ Produto ◈ Posicionamento ◎ Vendas']
   },
   {
     id: 'desgosto',
@@ -3178,12 +3156,9 @@ const COMP_BRANDS = [
     cardId: 'comp-desgosto',
     posX: 0.50, posY: 0.33,
     ticket: 240, audience: 28000, rigor: 0.72,
-    color: '#8870c0',
-    colorDim: 'rgba(136,112,192,0.25)',
-    bold: false,
-    tag: 'ameaca',
-    cenario: 'futuro',
-    tooltip: ['Desgosto', 'street nicho angular · SP · ~28K', 'Ticket ~R$240 · estética queer próxima', '⚠ Ameaça de identidade no futuro']
+    color: '#8870c0', colorDim: 'rgba(136,112,192,0.25)',
+    bold: false, tag: 'ameaca', tipo: ['produto', 'posicionamento', 'vendas'], cenario: 'futuro',
+    tooltip: ['Desgosto', 'street nicho angular · SP · ~28K', 'Ticket ~R$240 · estética queer', '⬡ Produto ◈ Posicionamento ◎ Vendas']
   },
   {
     id: 'piet',
@@ -3191,12 +3166,9 @@ const COMP_BRANDS = [
     cardId: 'comp-piet',
     posX: 0.62, posY: 0.40,
     ticket: 320, audience: 85000, rigor: 0.70,
-    color: '#5090d0',
-    colorDim: 'rgba(80,144,208,0.2)',
-    bold: false,
-    tag: 'monitorar',
-    cenario: 'futuro',
-    tooltip: ['Piet', 'streetwear conceitual · SP · ~85K', 'Ticket ~R$320 · alfaiataria + street', 'Monitorar — sem recorte de gênero explícito']
+    color: '#5090d0', colorDim: 'rgba(80,144,208,0.2)',
+    bold: false, tag: 'monitorar', tipo: ['produto', 'vendas'], cenario: 'futuro',
+    tooltip: ['Piet', 'streetwear conceitual · SP · ~85K', 'Ticket ~R$320 · alfaiataria + street', '⬡ Produto ◎ Vendas']
   },
   {
     id: 'back-to-eden',
@@ -3204,44 +3176,66 @@ const COMP_BRANDS = [
     cardId: 'comp-backtoedem',
     posX: 0.37, posY: 0.18,
     ticket: 900, audience: 22000, rigor: 0.92,
-    color: '#888888',
-    colorDim: 'rgba(136,136,136,0.2)',
-    bold: false,
-    dashed: true,
-    tag: 'monitorar',
-    cenario: 'futuro',
-    tooltip: ['Back to Eden', 'alfaiataria · nicho · ~22K', 'Ticket ~R$900 · rebranding em curso', 'Monitorar — alta alfaiataria, ticket distante']
+    color: '#888888', colorDim: 'rgba(136,136,136,0.2)',
+    bold: false, dashed: true, tag: 'monitorar', tipo: ['posicionamento'], cenario: 'futuro',
+    tooltip: ['Back to Eden', 'alfaiataria · nicho · ~22K', 'Ticket ~R$900 · andrógino, SP underground', '◈ Posicionamento — território queer/conceitual']
   },
   {
     id: 'welcome-sunny-f',
     name: 'Welcome Sunny',
     cardId: 'comp-welcomesunny',
     posX: 0.46, posY: 0.52,
-    ticket: 280, audience: 120000, rigor: 0.55,
-    color: '#aaaaaa',
-    colorDim: 'rgba(170,170,170,0.2)',
-    bold: false,
-    tag: 'monitorar',
-    cenario: 'futuro',
-    tooltip: ['Welcome Sunny', 'street · nicho/fluido · 120K', 'Valida a categoria no BR', 'Monitorar — pode pivotar para alfaiataria']
+    ticket: 280, audience: 123000, rigor: 0.55,
+    color: '#aaaaaa', colorDim: 'rgba(170,170,170,0.2)',
+    bold: false, tag: 'monitorar', tipo: ['produto', 'posicionamento', 'vendas'], cenario: 'futuro',
+    tooltip: ['Welcome Sunny', 'street nicho/fluido · 123K · collab Hering', 'Pode pivotar para alfaiataria', '⬡ Produto ◈ Posicionamento ◎ Vendas']
   },
   {
     id: 'dust-co-f',
     name: 'Dust Co.',
     cardId: 'comp-dustcompany',
     posX: 0.72, posY: 0.50,
-    ticket: 280, audience: 154000, rigor: 0.55,
-    color: '#e07030',
-    colorDim: 'rgba(224,112,48,0.25)',
-    bold: false,
-    tag: 'monitorar',
-    cenario: 'futuro',
-    tooltip: ['The Dust Company', 'street premium · 154K', 'Ticket ~R$280 · sem recorte alfaiataria', 'Monitorar — se pivotar, entra no território']
+    ticket: 370, audience: 158000, rigor: 0.62,
+    color: '#e07030', colorDim: 'rgba(224,112,48,0.25)',
+    bold: false, tag: 'monitorar', tipo: ['produto', 'vendas'], cenario: 'futuro',
+    tooltip: ['The Dust Company', 'street premium · 158K · wide/baggy/flare', 'Sem recorte alfaiataria ainda', '⬡ Produto ◎ Vendas — se pivotar, entra no território']
   }
 ];
 
 let _posFilter = 'all';
 let _posCenario = 'atual'; // 'atual' | 'futuro'
+let _tipoFilter = 'all';  // 'all' | 'produto' | 'posicionamento' | 'vendas'
+
+const TIPO_DESCS = {
+  all: 'Todos os concorrentes monitorados — modelagem, posicionamento e disputa direta de venda.',
+  produto: 'Marcas com modelagens similares (wide, baggy, oversized, alfaiataria desconstruída) — disputam a mesma decisão de produto.',
+  posicionamento: 'Marcas que operam no mesmo território estético — street nicho, queer/andrógino, conceitual, SP.',
+  vendas: 'Marcas que disputam o mesmo bolso no mesmo momento — ticket equivalente, e-commerce nacional, mesmo consumidor.'
+};
+
+function tipoFilterClick(btn, tipo) {
+  _tipoFilter = tipo;
+  document.querySelectorAll('.tipo-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const desc = document.getElementById('tipo-filter-desc');
+  if (desc) desc.textContent = TIPO_DESCS[tipo] || '';
+  _applyTipoFilterToCards(tipo);
+  const cnt = document.getElementById('tipo-filter-count');
+  const cards = [...document.querySelectorAll('#comp-pane-cards .comp-card')];
+  const visible = tipo === 'all' ? cards.length : cards.filter(c => (c.getAttribute('data-tipo') || '').split(' ').includes(tipo)).length;
+  if (cnt) cnt.textContent = tipo !== 'all' ? visible + ' marca' + (visible !== 1 ? 's' : '') : '';
+  drawTicketChart();
+  drawPublicoChart();
+  drawPosMap();
+}
+
+function _applyTipoFilterToCards(tipo) {
+  document.querySelectorAll('#comp-pane-cards .comp-card').forEach(card => {
+    if (tipo === 'all') { card.classList.remove('tipo-hidden'); return; }
+    const tipos = (card.getAttribute('data-tipo') || '').split(' ');
+    card.classList.toggle('tipo-hidden', !tipos.includes(tipo));
+  });
+}
 
 function posFilterClick(btn, filter) {
   _posFilter = filter;
@@ -3399,7 +3393,9 @@ function drawPosMap(hoverId) {
   // Filtrar marcas pelo cenário ativo
   const visibleBrands = COMP_BRANDS.filter(b => {
     if (b.id === 'border') return true;
-    return b.cenario === _posCenario || b.cenario === 'ambos';
+    if (!(b.cenario === _posCenario || b.cenario === 'ambos')) return false;
+    if (_tipoFilter !== 'all' && !(b.tipo && b.tipo.includes(_tipoFilter))) return false;
+    return true;
   });
 
   visibleBrands.forEach(b => {
@@ -3709,7 +3705,7 @@ function drawTicketChart() {
   if (!canvas) return;
   const dpr = window.devicePixelRatio || 1;
   const W = canvas.parentElement.clientWidth;
-  const brands = COMP_BRANDS.filter(b => b.id !== 'border' && !b.id.endsWith('-f')).sort((a,b) => b.ticket - a.ticket);
+  const brands = COMP_BRANDS.filter(b => b.id !== 'border' && !b.id.endsWith('-f') && (_tipoFilter === 'all' || (b.tipo && b.tipo.includes(_tipoFilter)))).sort((a,b) => b.ticket - a.ticket);
   const border = COMP_BRANDS.find(b => b.id === 'border');
   const BAR_H = 36, GAP = 8;
   const PAD = { top: 32, right: 72, bottom: 16, left: 126 };
@@ -4202,15 +4198,15 @@ function drawModelagemChart() {
 const PUBLICO_DATA = [
   { id: 'border',       name: 'Border',      color: '#4285F4', isBorder: true,
     queer: 92, desfem: 90, masc: 88, jovem: 85, conceitual: 90, street: 82 },
-  { id: 'dust-co',      name: 'Dust Co.',     color: '#e07030',
+  { id: 'dust-co',      name: 'Dust Co.',     color: '#e07030',  tipo: ['produto', 'vendas'],
     queer: 35, desfem: 30, masc: 60, jovem: 75, conceitual: 40, street: 85 },
-  { id: 'hist',         name: 'HIST',         color: '#c0a880',
+  { id: 'hist',         name: 'HIST',         color: '#c0a880',  tipo: ['produto', 'posicionamento', 'vendas'],
     queer: 40, desfem: 50, masc: 45, jovem: 70, conceitual: 75, street: 70 },
-  { id: 'desgosto',     name: 'Desgosto',     color: '#8870c0',
+  { id: 'desgosto',     name: 'Desgosto',     color: '#8870c0',  tipo: ['produto', 'posicionamento', 'vendas'],
     queer: 55, desfem: 55, masc: 50, jovem: 80, conceitual: 60, street: 75 },
-  { id: 'piet',         name: 'Piet',         color: '#5090d0',
+  { id: 'piet',         name: 'Piet',         color: '#5090d0',  tipo: ['produto', 'vendas'],
     queer: 25, desfem: 20, masc: 70, jovem: 65, conceitual: 70, street: 65 },
-  { id: 'pace',         name: 'Pace',         color: '#60a878',
+  { id: 'pace',         name: 'Pace',         color: '#60a878',  tipo: ['produto', 'vendas'],
     queer: 20, desfem: 25, masc: 55, jovem: 82, conceitual: 45, street: 80 },
 ];
 
@@ -4237,7 +4233,7 @@ function drawPublicoChart() {
   const BLK_PAD = 18;
   const BLOCK_H = segments.length * (BAR_H + BAR_GAP) + 4;
 
-  const allBrands = PUBLICO_DATA.filter(b => !b.isBorder);
+  const allBrands = PUBLICO_DATA.filter(b => !b.isBorder && (_tipoFilter === 'all' || (b.tipo && b.tipo.includes(_tipoFilter))));
   const border    = PUBLICO_DATA.find(b => b.isBorder);
   const plotW     = W - PAD.left - PAD.right;
   const totalBlocks = allBrands.length + 1;
