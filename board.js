@@ -945,6 +945,40 @@ SOBRE A BORDER:
 - Tagline: "Unbound Garments"
 - Plataformas: Instagram + TikTok
 
+SETS DE CONTEÚDO ORGÂNICO (use esses 4 pilares ao distribuir os posts da semana):
+Set A — Identidade Queer / Nicho:
+  Ensaios editoriais corpo + estrutura da peça. Sem texto na imagem.
+  Formato: estático de alta qualidade, 1:1 ou 4:5 · Frequência: 2x/semana
+  Hashtags: #modaqueer #modemasculine #queerfashion #andrógino
+
+Set B — Street Alfaiataria:
+  Detalhes construtivos: costura, caimento, tecido. POV de quem faz.
+  Formato: carrossel ou vídeo 15s · Frequência: 2x/semana
+  Hashtags: #tailoring #streetwear #alfaiataria #slowfashionbrasil
+
+Set C — Produto e Descoberta:
+  Foto de produto limpa, contexto urbano. Para novos seguidores.
+  Formato: estático ou Reels curto · Frequência: 1x/semana
+  Hashtags: #lookdodia #streetstyle #modaindependente
+
+Set D — TikTok / Reels (Behind the scenes):
+  Behind the scenes, processo de construção, styling raw. Tom seco, sem legenda longa. A imagem trabalha.
+  Frequência: 3–4x/semana · Plataforma: TikTok + Reels
+
+CADÊNCIA SEMANAL SUGERIDA PELO PLAYBOOK:
+Segunda (19h): Set A ou carrossel de propósito/manifesto (Instagram)
+Terça (12h): Set D — detalhe de produção TikTok (bastidores, tecido, costura)
+Quarta (11h): Set B — moodboard musical ou referência visual (Stories/Reels)
+Quinta (19h): Set D — transformação editada (desenho técnico → peça pronta)
+Sexta (12h): Set C — apresentação do drop/produto (foto ou vídeo profissional)
+Sábado (16h): UGC / interação comunidade (enquetes, reposts, caixa de perguntas)
+Domingo (20h): reflexão curta / mindset (opcional, engajamento)
+
+CTAs estratégicos (usar nas legendas):
+- Em vez de "Compre agora" → "Entre para a cena" ou "Garanta seu drop antes que acabe"
+- Para bastidores → "Siga o corre de perto"
+- Hashtags fixas todo post: #borderltd #unboundgarments #streetalfaiataria
+
 INSTRUÇÃO DE FORMATO (${modoConfig.label}):
 ${modoConfig.instrucao}
 Tom das legendas: ${modoConfig.tom}
@@ -1187,6 +1221,8 @@ const ROUTE_MAP = {
   'competidores':          '/negocios/concorrentes-ia',
   'planejador':            '/negocios/planejador',
   'referencias':           '/negocios/referencias',
+  'financeiro':            '/negocios/financeiro',
+  'googleads':             '/negocios/google-ads',
   'analyzer':              '/ferramentas/caption',
   'brief':                 '/ferramentas/brief',
   'hashgen':               '/ferramentas/hashtags',
@@ -1234,7 +1270,7 @@ const PANEL_ACCORDION_MAP = {
   'metrics':'performance','metaads':'performance','grupo-performance':'performance',
   'analise-cruzada':'relatorios','grupo-relatorios':'relatorios',
   'canvas':'negocios','personas':'negocios','swot':'negocios','competidores':'negocios',
-  'planejador':'negocios','referencias':'negocios','grupo-negocios':'negocios',
+  'planejador':'negocios','referencias':'negocios','financeiro':'negocios','googleads':'negocios','grupo-negocios':'negocios',
   'analyzer':'ferramentas','brief':'ferramentas','hashgen':'ferramentas','adcopy':'ferramentas',
   'roteiro':'ferramentas','iaassist':'ferramentas','grupo-ferramentas':'ferramentas',
   'tendencias':'tendencias','grupo-tendencias':'tendencias',
@@ -1295,6 +1331,8 @@ function go(id, el, skipHistory) {
   // Abre o accordion correspondente ao painel navegado
   openAccordionForPanel(id);
   closeSidebar();
+  // Garante que o BMC renderiza toda vez que o painel é aberto
+  if(id === 'canvas') { initCanvasDisplays(); renderCanvasHistoryAccordion(); }
   // Atualiza painel de settings quando aberto
   if(id === 'settings') {
     updateHistoricoStats();
@@ -2647,53 +2685,57 @@ function getBMCHistory() {
   catch(e) { return []; }
 }
 
+// ── BMC MODAL EDIT ─────────────────────────────────────────────────
+// Edição via popup fullscreen em vez de inline textarea.
+// _bmcModalField guarda qual campo está sendo editado.
+let _bmcModalField = null;
+
 function startEditCanvas(field) {
-  const display = document.getElementById('bmc-display-'+field);
-  const editArea = document.getElementById('bmc-edit-'+field);
-  const textarea = document.getElementById('bmc-textarea-'+field);
   const bmc = getBMC();
-  textarea.value = bmc[field] || BMC_DEFAULTS[field];
-  display.style.display = 'none';
-  editArea.style.display = 'block';
-  textarea.focus();
+  _bmcModalField = field;
+  const label = document.getElementById('bmc-modal-label');
+  const ta    = document.getElementById('bmc-modal-textarea');
+  if(label) label.textContent = BMC_LABELS[field];
+  if(ta)    ta.value = bmc[field] || BMC_DEFAULTS[field];
+  const overlay = document.getElementById('bmc-modal-overlay');
+  if(overlay) { overlay.style.display = 'flex'; setTimeout(()=>ta&&ta.focus(), 60); }
 }
 
-function cancelEditCanvas(field) {
-  document.getElementById('bmc-display-'+field).style.display = 'block';
-  document.getElementById('bmc-edit-'+field).style.display = 'none';
+function closeCanvasModal() {
+  const overlay = document.getElementById('bmc-modal-overlay');
+  if(overlay) overlay.style.display = 'none';
+  _bmcModalField = null;
 }
 
-function saveEditCanvas(field) {
-  const textarea = document.getElementById('bmc-textarea-'+field);
-  const newVal = textarea.value.trim();
-  if(!newVal) return;
+// Alias para compatibilidade com botões Cancelar antigos no HTML
+function cancelEditCanvas() { closeCanvasModal(); }
 
-  const bmc = getBMC();
+function saveEditCanvas() { saveCanvasModal(); }
+
+function saveCanvasModal() {
+  const ta = document.getElementById('bmc-modal-textarea');
+  const newVal = ta ? ta.value.trim() : '';
+  if(!newVal || !_bmcModalField) return;
+  const field = _bmcModalField;
+
+  const bmc    = getBMC();
   const oldVal = bmc[field] || BMC_DEFAULTS[field];
 
-  // Salva no histórico antes de sobrescrever
-  const history = getBMCHistory();
-  const now = new Date();
+  // Guarda versão anterior no histórico antes de sobrescrever
+  const hist = getBMCHistory();
+  const now  = new Date();
   const dateStr = now.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}) +
     ' ' + now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-  history.unshift({
-    field,
-    fieldLabel: BMC_LABELS[field],
-    date: dateStr,
-    value: oldVal
-  });
-  // Limita histórico a 50 entradas
-  if(history.length > 50) history.splice(50);
-  localStorage.setItem(BMC_HIST_KEY, JSON.stringify(history));
+  hist.unshift({ field, fieldLabel: BMC_LABELS[field], date: dateStr, value: oldVal });
+  if(hist.length > 50) hist.splice(50);
+  localStorage.setItem(BMC_HIST_KEY, JSON.stringify(hist));
 
-  // Salva novo valor
+  // Persiste novo valor e atualiza display
   bmc[field] = newVal;
   localStorage.setItem(BMC_KEY, JSON.stringify(bmc));
-
-  // Atualiza display
   renderCanvasField(field, newVal);
-  cancelEditCanvas(field);
   renderCanvasHistoryAccordion();
+  closeCanvasModal();
 }
 
 function renderCanvasField(field, value) {
