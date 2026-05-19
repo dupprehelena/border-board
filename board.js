@@ -2427,19 +2427,202 @@ document.addEventListener('DOMContentLoaded', async function() {
 //   1. Adicione a chave em BMC_DEFAULTS com o valor padrão
 //   2. Adicione o label em BMC_LABELS
 //   3. Adicione o bloco HTML em index.html seguindo o padrão dos outros campos
-const BMC_KEY = 'border_bmc_v1';
+const BMC_KEY = 'border_bmc_v2';
 const BMC_HIST_KEY = 'border_bmc_history_v1';
 
 const BMC_DEFAULTS = {
-  parceiros: `Criadores: Fotógrafos e criadores parceiros, Collabs estratégicas\nFornecedor chave: Confecção private label (lab77, ramps e RDV Caps), Fornecedor de embalagem (printi e mag), Fornecedor de brindes\nParceiro de distribuição: Correios, Jadlog, Transportadora, Lojas multimarcas (futuro)\nParceiro tecnológico: Plataforma de e-commerce (NuvemShop), Hostgator, Software de gestão ERP`,
-  atividades: `Pesquisa e desenvolvimento de coleção\nCriação de modelagem própria\nPlanejamento de drops\nProdução em pequena escala\nMarketing narrativo\nGestão de comunidade\nGestão financeira e margem`,
-  recursos: `Marca e identidade autoral\nEstúdio e criação própria\nMarketing narrativo e comunidade\nParcerias estratégicas\nPlataforma de e-commerce`,
-  proposta: `Problemas/pontos de dor: Mulheres desfem não se veem representadas na moda tradicional; Falta de representatividade; Modelagens que não contemplam corpos diversos; Streetwear feminino padronizado ou hipersexualizado\nSolução: Modelagens autorais pensadas para corpos diversos; Streetwear com alfaiataria e estrutura; Drops limitados e numerados; Produção consciente e responsável\nBenefício Funcional: Caimento estruturado; Conforto + presença estética; Peças versáteis e duráveis\nBenefício Emocional: Autonomia estética; Sentimento de pertencimento; Validação de identidade\nDiferencial: Marca criada por mulher desfem; Produção em pequenas tiragens; Narrativa forte e coerente; Comunidade construída junto`,
-  relacionamentos: `Atendimento próximo e transparente\nComunidade ativa\nPré-venda exclusiva / Lista VIP de drops\nConteúdo autoral sobre identidade\nParticipação em decisões (ex: votação de cores)\nClube Border — futuro\nConteúdo autoral recorrente\nHistórias das peças\nObjetivo: transformar cliente em comunidade`,
-  canais: `Aquisição: Instagram, Tráfego pago, Conteúdo orgânico\nConversão: E-commerce próprio (NuvemShop), WhatsApp\nRetenção: Email marketing, Social media, Drops exclusivos`,
-  segmentos: `Segmento primário: Mulheres desfem e pessoas de identidade não normativa; 23–38 anos; Vivem em capitais ou grandes centros; Valorizam estética street + alfaiataria; Buscam roupas que não sexualizem seus corpos; Renda média a média-alta; Compram marcas autorais independentes\nSegmento secundário: Pessoas do universo criativo (design, arte, música, audiovisual); Consumidores de moda autoral e independente; Comunidade LGBTQIA+ com afinidade estética`,
-  custos: `Custos fixos: Plataforma e-commerce, Domínio, ERP, Contabilidade, Internet, Ferramentas (Google Workspace etc.)\nCustos variáveis: Produção por peça, Estamparia, Embalagem, Frete, Taxa de pagamento, Fotografia por drop, Impostos sobre venda — Meta: margem mínima 60–70%\nDespesas operacionais: Infraestrutura de home office (computador, internet, impressora)`,
-  receitas: `Principal: Venda de peças em drops limitados — Estratégia: alta margem + baixa escala\nSecundárias (expansão futura): Collabs numeradas, Peças cápsula, Edição especial anual, Eventos pop-up`
+  parceiros: `Criadores de conteúdo e influenciadores de nicho
+— Micro-criadores queer masc (5K–30K seguidores): custo zero, audiência qualificada, constroem comunidade mais rápido que ads pagos
+— Fotógrafos e diretores de arte parceiros com estética alinhada
+— Collabs estratégicas com marcas complementares (acessórios, calçados, streetwear não-concorrente)
+
+Fornecedores chave
+— Confecção private label: lab77, Ramps, RDV Caps
+— Fornecedor de embalagem: Printi, Mag
+— Fornecedor de brindes e extras de unboxing
+
+Parceiros de distribuição
+— Correios, Jadlog, Transportadoras
+— Lojas multimarcas (futuro: pop-ups e consignação)
+
+Parceiros de produção editorial
+— Estúdios de fotografia com identidade street
+— Produtoras de conteúdo para campanhas de coleção
+
+Parceiros tecnológicos
+— Plataforma de e-commerce: NuvemShop
+— Hostgator (hospedagem), Software de gestão ERP
+— Plataformas de crowdfunding (Catarse, Kickante) para drops especiais`,
+
+  atividades: `Pesquisa e desenvolvimento de coleção
+— Pesquisa de tendências editoriais (SPFW, ELLE, RFW)
+— Desenvolvimento de modelagens autorais para corpos não-normativos
+— Testes de caimento e aprovação de protótipos
+
+Curadoria de casting e direção de arte
+— Seleção de modelos/pessoas reais com estética queer masc autêntica
+— Direção de arte de editoriais e drops
+— Criação de universo visual coerente e inegociável
+
+Planejamento e execução de drops
+— Definição de calendário, tiragem e numeração
+— Coordenação de produção em pequena escala
+— Criação de ritual de lançamento (teaser, lista VIP, abertura)
+
+Storytelling visual e marketing narrativo
+— Produção de conteúdo orgânico (2x/semana mínimo)
+— Narrativa de bastidor, processo e identidade
+— Gestão de comunidade e relacionamento direto
+
+Gestão financeira e operacional
+— Controle de margem por peça (meta: 60–70%)
+— Precificação de drops
+— Logística e pós-venda`,
+
+  recursos: `Marca e identidade autoral
+— Posicionamento único: street alfaiataria sem gênero, identidade não-declarada, rigor construtivo
+— Estética visual proprietária — inimitável por marcas maiores
+
+Capacidade criativa e técnica
+— Criação de modelagens próprias pensadas para corpos diversos
+— Direção de arte e curadoria visual interna
+
+Comunidade e audiência
+— Base de clientes com alta propensão a fidelização
+— Lista VIP de drops (ativo mais valioso a construir)
+— Relacionamento direto sem intermediário
+
+Infraestrutura de e-commerce
+— Loja NuvemShop com snippets de produto indexados no Google
+— Ferramentas de analytics: GA4, Meta Ads, GTM, Clarity
+
+Capital criativo e intelectual
+— Fundadora com dupla competência: UX/Design + Empreendedorismo
+— Visão de produto integrada à visão de marca`,
+
+  proposta: `Identidade não declarada, só mostrada
+Street alfaiataria com rigor construtivo para corpos que a moda ignora. A Border não explica o que é — mostra.
+
+Problema que a moda não resolve
+— Mulheres desfem e pessoas de identidade não normativa não existem para o mercado mainstream
+— Modelagem masculina não foi feita para corpos femininos: exige ajuste constante, caro e trabalhoso
+— Streetwear feminino é padronizado ou hipersexualizado — nenhuma das duas opções serve
+— Ausência de representação autêntica: modelos reais com estética queer são raros em marcas de moda
+
+O que a Border oferece
+— Modelagens autorais pensadas do zero para corpos não-normativos, com caimento estruturado
+— Streetwear com alfaiataria: presença estética + conforto real
+— Drops limitados e numerados: raridade com intenção, não como truque de marketing
+— Produção consciente e em pequena escala
+— Identidade visual que pertence ao universo queer sem rainbow washing
+
+Benefício funcional: peça que serve, que não precisa de ajuste, que dura
+Benefício emocional: autonomia estética, pertencimento, validação de identidade sem declaração
+Diferencial estrutural: única marca BR que opera street alfaiataria com identidade queer masc como eixo deliberado — não é nicho por acidente, é posição de fundador`,
+
+  relacionamentos: `Comunidade, não base de clientes
+O objetivo central é transformar comprador em comunidade — isso muda tudo sobre como a Border se relaciona.
+
+Pré-venda e acesso exclusivo
+— Lista VIP de drops: primeiros a saber, primeiros a comprar, primeiros a receber
+— Early access 48h antes da abertura geral para quem está na lista
+— Numeração de peças: cada cliente sabe o número da sua peça na tiragem
+
+Comunidade ativa
+— Canal privado (WhatsApp ou Discord): bastidores, decisões, processo
+— Participação em decisões reais: votação de cores, nomes de drop, próximas peças
+— Feedback direto com resposta — não chatbot, não formulário
+
+Surpresas e exclusividades
+— Brindes inesperados no unboxing de cada pedido
+— Edições especiais sem aviso prévio para clientes recorrentes
+— Mensagem pessoal da fundadora em pedidos especiais
+
+Conteúdo autoral recorrente
+— Histórias das peças: de onde vieram, como foram feitas, quem as usou
+— Bastidor real: erros, acertos, processo criativo
+— Objetivo: a Border não vende roupa — vende pertencimento`,
+
+  canais: `Aquisição
+— Instagram (orgânico + pago): principal canal de descoberta
+— Tráfego pago Meta Ads: alcance e retargeting de produto
+— Conteúdo orgânico: reels de bastidor, processo, identidade (constrói comunidade)
+— Micro-criadores de nicho: UGC qualificado, custo zero de mídia
+— SEO: "street alfaiataria", "roupa sem gênero Brasil", "moda queer masc" (não trabalhado ainda — oportunidade)
+
+Conversão
+— E-commerce próprio NuvemShop: checkout completo, snippets no Google
+— WhatsApp: atendimento direto, dúvidas de tamanho, pós-venda próximo
+
+Retenção e fidelização
+— Email marketing: comunicação de drops, bastidor, conteúdo exclusivo
+— Lista VIP de pré-venda: canal de retenção mais valioso
+— Stories e close friends: relacionamento cotidiano
+— Drops exclusivos para clientes recorrentes`,
+
+  segmentos: `Segmento primário — Quem a Border foi feita para
+— Mulheres desfem, tomboy, butch e pessoas de identidade não normativa
+— 23–38 anos, vivem em capitais ou grandes centros (SP, RJ, BH, POA)
+— Renda média a média-alta (R$7K–12K/mês): ticket Border de R$159–289 representa 2–4% da renda mensal — compra confortável
+— Valorizam estética street + alfaiataria com rigor construtivo
+— Buscam roupas que não sexualizem o corpo e não precisem de adaptação
+— Compram marcas autorais e independentes — rejeitam fast fashion
+— Alta propensão a fidelização quando a identidade da marca ressoa
+
+Segmento secundário — Quem também compra
+— Pessoas do universo criativo: design, arte, música, audiovisual
+— Consumidores de moda autoral que valorizam peças com narrativa
+— Comunidade LGBTQIA+ ampla com afinidade estética street/alfaiataria
+— Homens e pessoas não-binárias com estética alinhada ao universo Border`,
+
+  custos: `CUSTOS FIXOS (mensais, independem do volume de vendas)
+— Plataforma e-commerce: NuvemShop (~R$200–400/mês)
+— Domínio e hospedagem: Hostgator (~R$50/mês)
+— Ferramentas de gestão: ERP, Google Workspace (~R$100–200/mês)
+— Contabilidade: (~R$300–600/mês)
+— Internet e telefone: (~R$150/mês)
+— Software de design: Adobe CC ou similar (~R$200/mês)
+— Total fixo estimado: ~R$1.000–1.550/mês
+
+CUSTOS VARIÁVEIS (por drop / por peça)
+— Produção por peça (confecção private label): maior variável
+— Estamparia e acabamentos especiais
+— Embalagem e materiais de unboxing
+— Frete (Correios / Jadlog)
+— Taxa de pagamento (cartão + gateway): ~3–5% do valor
+— Fotografia e produção editorial por drop
+— Impostos sobre venda (MEI/Simples Nacional)
+— Investimento em tráfego pago Meta Ads
+— Meta de margem mínima por peça: 60–70%
+
+INVESTIMENTOS PONTUAIS
+— Infraestrutura de home office (amortizado)
+— Desenvolvimento de modelagens novas por coleção
+— Produção de lookbook / editorial de lançamento`,
+
+  receitas: `RECEITA PRINCIPAL
+Venda direta de peças em drops limitados e numerados
+— Estratégia: alta margem + baixa escala (não competir em volume)
+— Ticket médio atual: R$159–289/peça
+— Modelo de escassez intencional: cada drop com tiragem definida e numerada
+
+PRÉ-VENDA E EARLY ACCESS
+— Pre-orders exclusivos para lista VIP: garantia de peça antes da produção
+— Permite validar demanda antes de produzir — reduz risco de estoque
+— Cria ritual de lançamento e antecipação na comunidade
+
+CROWDFUNDING PARA COLEÇÕES ESPECIAIS
+— Drops maiores ou peças com maior investimento de produção
+— Plataformas: Catarse, Kickante
+— Valida o produto antes de investir + cria co-propriedade da comunidade
+
+RECEITAS SECUNDÁRIAS (expansão)
+— Collabs numeradas com marcas complementares (acessórios, calçados)
+— Peças cápsula em parceria com criadores / artistas
+— Workshop de criação e processo criativo de marca autoral
+— Serviço de styling: looks completos Border curados pela fundadora
+— Edição especial anual: peça-colecionável com narrativa forte
+— Eventos pop-up e apresentações físicas de coleção`
 };
 
 const BMC_LABELS = {
