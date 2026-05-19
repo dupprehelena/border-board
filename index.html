@@ -39,7 +39,7 @@
     window.location.href = '/login.html';
   }
 </script>
-<script>window.DEPLOY_TIMESTAMP="19/05/2026 03:04";</script>
+<script>window.DEPLOY_TIMESTAMP="19/05/2026 03:17";</script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Pular para o conteúdo</a>
@@ -135,6 +135,8 @@
       <button class="nav-item" data-panel="competidores" onclick="go('competidores',this)"><span class="dot"></span>Concorrentes · IA</button>
       <button class="nav-item" data-panel="planejador" onclick="go('planejador',this)"><span class="dot"></span>Planejador Editorial</button>
       <button class="nav-item" data-panel="referencias" onclick="go('referencias',this)"><span class="dot"></span>Banco de Referências</button>
+      <button class="nav-item" data-panel="financeiro" onclick="go('financeiro',this)"><span class="dot"></span>Análise Financeira</button>
+      <button class="nav-item" data-panel="googleads" onclick="go('googleads',this)"><span class="dot"></span>Google Ads · Guia</button>
     </div>
   </div>
 
@@ -470,6 +472,16 @@
       <div class="grupo-card-icon">→</div>
       <div class="grupo-card-title">Banco de Referências</div>
       <div class="grupo-card-desc">Imagens e referências visuais por categoria e estética</div>
+    </button>
+    <button class="grupo-card" onclick="go('financeiro',null)">
+      <div class="grupo-card-icon">$</div>
+      <div class="grupo-card-title">Análise Financeira</div>
+      <div class="grupo-card-desc">Precificação, margens, cenários e reinvestimento — Coleção Jardim</div>
+    </button>
+    <button class="grupo-card" onclick="go('googleads',null)">
+      <div class="grupo-card-icon">G</div>
+      <div class="grupo-card-title">Google Ads · Guia</div>
+      <div class="grupo-card-desc">Search, Shopping, públicos e estrutura de teste 60 dias</div>
     </button>
   </div>
 </div>
@@ -6228,6 +6240,351 @@
       <a href="https://www.glassdoor.com.br/Sal%C3%A1rios/s%C3%A3o-paulo-diretor-de-arte-sal%C3%A1rio-SRCH_IL.0,9_IM1009_KO10,25.htm" target="_blank" style="color:var(--dim);text-decoration:underline">Glassdoor — Diretor de Arte SP 2026</a> · média R$9.194; faixa R$7.371–19.098 &nbsp;·&nbsp;
       <a href="https://istoedinheiro.com.br/quanto-renda-classe-social" target="_blank" style="color:var(--dim);text-decoration:underline">ISTOÉ Dinheiro — Classes Sociais Brasil</a> · Classe B: R$8.105–16.210/mês; Classe A: acima R$16.210 &nbsp;·&nbsp;
       <a href="https://blog.opinionbox.com/consumo-de-moda-no-brasil/" target="_blank" style="color:var(--dim);text-decoration:underline">Opinion Box — Consumo de Moda no Brasil</a> · 11% gastam R$500+/mês; ticket médio R$265
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ANÁLISE FINANCEIRA
+══════════════════════════════════════ -->
+<div class="panel" id="p-financeiro">
+  <div class="panel-header">
+    <h2 class="panel-title">Análise Financeira</h2>
+    <div class="panel-sub">Coleção Jardim · Precificação · Margens · Cenários · Reinvestimento · Abril 2026</div>
+  </div>
+
+  <!-- PRECIFICAÇÃO POR PRODUTO -->
+  <span class="sec-label">Precificação por produto · Coleção Jardim</span>
+  <p style="font-size:14px;color:var(--dim);margin-bottom:24px">Tabela principal — sem imposto SIMPLES/MEI (referência correta para o estágio atual).</p>
+
+  <!-- BOXY -->
+  <div class="card" style="margin-bottom:12px;border-left:3px solid var(--green)">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+      <div>
+        <div class="card-label">Camiseta BOXY · Produto Âncora</div>
+        <div class="card-title" style="font-size:18px">Markup 3,48× · Margem líquida 66,45%</div>
+      </div>
+      <span class="badge badge-ok">produto mais rentável</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:14px">
+      <div style="padding:12px 16px;background:var(--bg3);border-right:1px solid var(--border)">
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Custo de produção</div>
+        <div style="font-size:20px;font-family:var(--serif);color:var(--text)">R$83,32<span style="font-size:12px;color:var(--dim)">/u</span></div>
+      </div>
+      <div style="padding:12px 16px;background:var(--bg3);border-right:1px solid var(--border)">
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Preço de venda</div>
+        <div style="font-size:20px;font-family:var(--serif);color:var(--text)">R$289,90</div>
+      </div>
+      <div style="padding:12px 16px;background:rgba(46,125,94,.06)">
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:6px">Margem líquida</div>
+        <div style="font-size:20px;font-family:var(--serif);color:var(--green)">66,45%</div>
+      </div>
+    </div>
+    <div class="card-body">É o modelo mais caro a produzir, mas também o que gera mais valor percebido e lucro absoluto. Produto âncora da coleção — deve ter destaque visual e narrativo no canal.</div>
+  </div>
+
+  <!-- OVERSIZE -->
+  <div class="card" style="margin-bottom:24px;border-left:3px solid #7090d0">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+      <div>
+        <div class="card-label">Camiseta OVERSIZE</div>
+        <div class="card-title" style="font-size:18px">Markup 3,29× · Margem líquida 64,71%</div>
+      </div>
+      <span style="font-size:11px;padding:3px 10px;border:1px solid #7090d0;color:#7090d0;letter-spacing:.06em">oportunidade de ajuste</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:14px">
+      <div style="padding:12px 16px;background:var(--bg3);border-right:1px solid var(--border)">
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Preço atual</div>
+        <div style="font-size:20px;font-family:var(--serif);color:var(--text)">R$209,90</div>
+      </div>
+      <div style="padding:12px 16px;background:var(--bg3);border-right:1px solid var(--border)">
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Preço potencial</div>
+        <div style="font-size:20px;font-family:var(--serif);color:#7090d0">R$229,90</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:3px">sem resistência de mercado</div>
+      </div>
+      <div style="padding:12px 16px;background:rgba(112,144,208,.06)">
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#7090d0;margin-bottom:6px">Margem atual</div>
+        <div style="font-size:20px;font-family:var(--serif);color:#7090d0">64,71%</div>
+      </div>
+    </div>
+    <div class="card-body">Boa precificação com margem saudável. O posicionamento streetwear premium da Border sustenta preço até R$229,90 — testar no próximo drop.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CENÁRIOS DE VENDA -->
+  <span class="sec-label">Cenários de venda · Coleção Jardim</span>
+  <div class="alert warn" style="margin-bottom:20px"><strong>⚠ Atenção:</strong> Inconsistência identificada no cenário de sell-out. Usar os cenários abaixo com cautela — validar contra os dados reais da planilha.</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:32px">
+    <div class="card" style="background:var(--bg3)">
+      <div class="card-label" style="color:var(--dim);margin-bottom:8px">Cenário Conservador</div>
+      <div style="font-size:13px;color:var(--sub);line-height:1.8">Vendas abaixo da meta · Recomendação: não reinvestir 100% · Manter reserva operacional de pelo menos 30%</div>
+    </div>
+    <div class="card" style="background:rgba(46,125,94,.06);border-color:var(--green)">
+      <div class="card-label" style="color:var(--green);margin-bottom:8px">Cenário Moderado</div>
+      <div style="font-size:13px;color:var(--sub);line-height:1.8">Meta de vendas alcançada · Base para cálculo de reinvestimento na próxima coleção</div>
+    </div>
+    <div class="card" style="background:rgba(112,144,208,.06);border-color:#7090d0">
+      <div class="card-label" style="color:#7090d0;margin-bottom:8px">Cenário Otimista (Sell-out)</div>
+      <div style="font-size:13px;color:var(--sub);line-height:1.8">Todas as peças vendidas · ⚠ Inconsistência identificada — validar cálculo no spreadsheet original</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- REINVESTIMENTO -->
+  <span class="sec-label">Plano de reinvestimento · Próxima coleção</span>
+  <p style="font-size:14px;color:var(--dim);margin-bottom:20px">Distribuição recomendada do lucro líquido da Coleção Jardim:</p>
+
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden">
+      <div style="padding:12px 16px;background:rgba(46,125,94,.06);border-right:1px solid var(--border)">
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:6px">Cenário Moderado</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.8">Produção da próxima coleção: ~50–60%<br>Marketing e tráfego pago: ~20–25%<br>Reserva operacional: ~20%</div>
+      </div>
+      <div style="padding:12px 16px;background:rgba(112,144,208,.06)">
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#7090d0;margin-bottom:6px">Cenário Otimista</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.8">Produção da próxima coleção: ~60–70%<br>Marketing e tráfego pago: ~20%<br>Reserva operacional: ~10–15%</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RECOMENDAÇÕES -->
+  <span class="sec-label">Recomendações prioritárias</span>
+
+  <div class="card" style="margin-bottom:12px;border-top:2px solid var(--warn)">
+    <div class="card-label" style="color:var(--warn);margin-bottom:10px">Imediatas · fechar Coleção Jardim</div>
+    <div class="card-body">
+      Revisar o impacto dos descontos praticados na margem real — qualquer desconto acima de 10% compromete o breakeven no cenário conservador.<br><br>
+      Validar inconsistência no cenário de sell-out antes de usá-lo como referência para compra de insumos da próxima coleção.<br><br>
+      Mapear custo real por peça com todos os variáveis incluídos (frete, taxa de pagamento, impostos) para ter margem líquida precisa, não estimada.
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px;border-top:2px solid var(--green)">
+    <div class="card-label" style="color:var(--green);margin-bottom:10px">Para a próxima coleção</div>
+    <div class="card-body">
+      Testar o preço da OVERSIZE em R$229,90 — o posicionamento da marca sustenta sem resistência.<br><br>
+      Manter BOXY como produto âncora e aumentar a tiragem proporcionalmente ao sell-out da Jardim.<br><br>
+      Incluir peça de alfaiataria (calça ou blazer) para validar se o público paga ticket maior — a dor das personas Marina e Camila aponta diretamente para esse produto.<br><br>
+      Estruturar pre-order antes da produção para reduzir risco de estoque e capturar capital antes do investimento.
+    </div>
+  </div>
+
+  <div class="update-footer">Análise Financeira · Coleção Jardim · Abril 2026 · Documento confidencial Border Ltd</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     GOOGLE ADS · GUIA
+══════════════════════════════════════ -->
+<div class="panel" id="p-googleads">
+  <div class="panel-header">
+    <h2 class="panel-title">Google Ads · Guia</h2>
+    <div class="panel-sub">Search · Shopping · Públicos · Estrutura de teste 60 dias · Playbook 2026</div>
+  </div>
+
+  <div class="alert info" style="margin-bottom:28px">
+    <strong>Pré-requisitos antes de ativar:</strong> Google Analytics 4 instalado no site · Google Merchant Center conectado à NuvemShop · Pixel GA4 disparando eventos (ViewContent, AddToCart, Purchase)
+  </div>
+
+  <!-- CAMPANHA SEARCH -->
+  <span class="sec-label">Campanha Search · Intenção de compra</span>
+  <p style="font-size:14px;color:var(--dim);margin-bottom:16px">Captura quem já procura o produto. Mais eficiente que Meta para conversão direta.</p>
+
+  <div class="card" style="margin-bottom:24px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div>
+        <div class="card-label" style="margin-bottom:10px">Keywords principais</div>
+        <div style="font-size:13px;color:var(--text);line-height:2">
+          <code style="background:var(--bg3);padding:2px 6px;font-size:12px">street alfaiataria</code><br>
+          <code style="background:var(--bg3);padding:2px 6px;font-size:12px">roupa sem gênero brasil</code><br>
+          <code style="background:var(--bg3);padding:2px 6px;font-size:12px">moda genderless brasil</code><br>
+          <code style="background:var(--bg3);padding:2px 6px;font-size:12px">streetwear feminino alfaiataria</code><br>
+          <code style="background:var(--bg3);padding:2px 6px;font-size:12px">camiseta oversized estruturada</code><br>
+          <code style="background:var(--bg3);padding:2px 6px;font-size:12px">moda queer masc brasil</code>
+        </div>
+      </div>
+      <div>
+        <div class="card-label" style="margin-bottom:10px">Configuração recomendada</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.85">
+          Correspondência: <strong>exata + frase</strong> (evitar ampla)<br>
+          Extensões: sitelinks (produtos, sobre, lookbook)<br>
+          Extensões de chamada: WhatsApp<br>
+          Extensões de preço: mostrar ticket médio<br>
+          Budget inicial: R$20–30/dia<br>
+          Meta de CPA: ≤ R$80 por compra
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMPANHA SHOPPING -->
+  <span class="sec-label">Campanha Shopping · Produto</span>
+  <p style="font-size:14px;color:var(--dim);margin-bottom:16px">Aparece no Google Shopping com foto + preço. Altamente visual — funciona bem para produtos com identidade forte.</p>
+
+  <div class="card" style="margin-bottom:24px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div>
+        <div class="card-label" style="margin-bottom:10px">Setup do feed (Merchant Center)</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.85">
+          Título do produto: incluir "street alfaiataria" + nome<br>
+          Descrição: mencionar caimento, oversized, sem gênero<br>
+          Imagem principal: fundo limpo + modelo real<br>
+          Categoria: Vestuário → Tops ou Calças<br>
+          Preço e estoque sincronizados com NuvemShop
+        </div>
+      </div>
+      <div>
+        <div class="card-label" style="margin-bottom:10px">Configuração da campanha</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.85">
+          Estratégia de lance: CPC manual no início<br>
+          Depois de 30+ conversões: migrar para tROAS<br>
+          Segmentação geográfica: SP, RJ, BH, POA, Curitiba<br>
+          Budget: R$15–25/dia<br>
+          Prioridade: Alta (para drops em destaque)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PÚBLICOS DE AUDIÊNCIA -->
+  <span class="sec-label">Públicos de audiência · Camadas de observação</span>
+  <p style="font-size:14px;color:var(--dim);margin-bottom:16px">Aplicar como camadas sobre as campanhas Search e Shopping — não restringem, mas informam lances e relatórios.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+    <div class="card" style="background:var(--bg3)">
+      <div class="card-label" style="margin-bottom:8px">In-Market (intenção ativa)</div>
+      <div style="font-size:13px;color:var(--sub);line-height:1.8">Roupas e Acessórios<br>Moda Masculina<br>Moda Feminina</div>
+    </div>
+    <div class="card" style="background:var(--bg3)">
+      <div class="card-label" style="margin-bottom:8px">Affinity (perfil de interesse)</div>
+      <div style="font-size:13px;color:var(--sub);line-height:1.8">Fashionistas<br>Entusiastas de estilo de vida urbano<br>Consumidores de moda sustentável</div>
+    </div>
+    <div class="card" style="background:var(--bg3)">
+      <div class="card-label" style="margin-bottom:8px">Remarketing (GA4 → Google Ads)</div>
+      <div style="font-size:13px;color:var(--sub);line-height:1.8">Visitantes do site (últimos 30 dias)<br>Usuários que visualizaram produto<br>Adicionaram ao carrinho sem comprar</div>
+    </div>
+    <div class="card" style="background:var(--bg3)">
+      <div class="card-label" style="margin-bottom:8px">Customer Match</div>
+      <div style="font-size:13px;color:var(--sub);line-height:1.8">Lista de e-mails de compradores (NuvemShop)<br>Lista VIP de drops<br>→ Criar lookalike após 1.000 contatos</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ESTRUTURA DE TESTE 60 DIAS -->
+  <span class="sec-label">Estrutura de teste · Primeiros 60 dias</span>
+
+  <div class="card" style="margin-bottom:12px;border-left:3px solid var(--text)">
+    <div class="card-label" style="margin-bottom:12px">Fase 1 · Dias 1–30 · Setup e coleta de dados</div>
+    <div class="card-body">
+      Semana 1: verificar que GA4 está disparando todos os eventos (ViewContent, AddToCart, Purchase). Sem esse dado, qualquer campanha é cega.<br><br>
+      Semana 2–3: ativar Search com CPC manual. Monitorar CTR (meta: &gt;3%) e taxa de conversão (&gt;1,5%).<br><br>
+      Semana 4: ativar Shopping. Comparar CPA entre Search e Shopping. Priorizar o canal com menor CPA.
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px;border-left:3px solid var(--accent)">
+    <div class="card-label" style="margin-bottom:12px">Fase 2 · Dias 31–60 · Otimização</div>
+    <div class="card-body">
+      Semana 5–6: adicionar públicos de remarketing. Testar landing page específica para cada keyword principal.<br><br>
+      Semana 7: se Search tiver 30+ conversões, migrar para Smart Bidding (tROAS).<br><br>
+      Semana 8: criar Customer Match com lista de compradores. Construir lookalike e testar expansão de alcance no Discovery.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CHECKLIST TÉCNICO -->
+  <span class="sec-label">Checklist de ativação técnica</span>
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--sub)">
+        <input type="checkbox" style="margin-top:3px;flex-shrink:0" aria-label="GA4 instalado"> Instalar Google Analytics 4 no site da Border (via GTM)
+      </label>
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--sub)">
+        <input type="checkbox" style="margin-top:3px;flex-shrink:0" aria-label="Merchant Center"> Conectar NuvemShop ao Google Merchant Center
+      </label>
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--sub)">
+        <input type="checkbox" style="margin-top:3px;flex-shrink:0" aria-label="Eventos GA4"> Configurar eventos GA4: ViewContent, AddToCart, Purchase
+      </label>
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--sub)">
+        <input type="checkbox" style="margin-top:3px;flex-shrink:0" aria-label="Vincular contas"> Vincular GA4 → Google Ads → Merchant Center
+      </label>
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--sub)">
+        <input type="checkbox" style="margin-top:3px;flex-shrink:0" aria-label="Feed shopping"> Criar e aprovar feed de produtos no Merchant Center
+      </label>
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--sub)">
+        <input type="checkbox" style="margin-top:3px;flex-shrink:0" aria-label="Campanha Search"> Criar campanha Search com keywords principais
+      </label>
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--sub)">
+        <input type="checkbox" style="margin-top:3px;flex-shrink:0" aria-label="Campanha Shopping"> Criar campanha Shopping com feed aprovado
+      </label>
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--sub)">
+        <input type="checkbox" style="margin-top:3px;flex-shrink:0" aria-label="Remarketing"> Ativar listas de remarketing (GA4 → Google Ads)
+      </label>
+    </div>
+  </div>
+
+  <div class="update-footer">Google Ads · Guia Estratégico · Playbook Border 2026 · Documento confidencial</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     BMC EDIT MODAL
+     Abre ao clicar em "Editar" em qualquer bloco do Business Model Canvas.
+     Fecha clicando no overlay, no ✕ ou em Cancelar.
+══════════════════════════════════════════════════════════════════ -->
+<div id="bmc-modal-overlay"
+     role="dialog" aria-modal="true" aria-labelledby="bmc-modal-label"
+     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:900;
+            align-items:center;justify-content:center;padding:16px"
+     onclick="if(event.target===this)closeCanvasModal()">
+  <div style="background:var(--bg2);border:1px solid var(--border2);
+              width:min(740px,100%);max-height:92vh;
+              display:flex;flex-direction:column;gap:0;overflow:hidden">
+
+    <!-- header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;
+                padding:20px 24px;border-bottom:1px solid var(--border)">
+      <div>
+        <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+                    color:var(--dim);margin-bottom:4px">Business Model Canvas · editando</div>
+        <div id="bmc-modal-label" style="font-size:17px;font-weight:700;color:var(--text);
+                                         font-family:var(--serif)"></div>
+      </div>
+      <button onclick="closeCanvasModal()"
+              aria-label="Fechar"
+              style="background:none;border:1px solid var(--border);color:var(--dim);
+                     font-size:18px;line-height:1;padding:6px 10px;cursor:pointer;
+                     transition:all .15s">✕</button>
+    </div>
+
+    <!-- textarea -->
+    <div style="padding:20px 24px;flex:1;overflow:auto;display:flex;flex-direction:column">
+      <div style="font-size:12px;color:var(--dim);margin-bottom:10px">
+        Use Enter para nova linha · cada linha vira uma entrada no bloco
+      </div>
+      <textarea id="bmc-modal-textarea"
+                aria-label="Editar bloco do Business Model Canvas"
+                style="flex:1;min-height:360px;width:100%;
+                       font-size:14px;line-height:1.85;
+                       font-family:var(--sans);
+                       background:var(--bg3);
+                       border:1px solid var(--border2);
+                       color:var(--text);
+                       padding:16px 18px;
+                       resize:vertical;
+                       box-sizing:border-box"></textarea>
+    </div>
+
+    <!-- footer -->
+    <div style="display:flex;gap:10px;justify-content:flex-end;
+                padding:16px 24px;border-top:1px solid var(--border)">
+      <button class="btn" onclick="closeCanvasModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveCanvasModal()">Salvar alterações →</button>
     </div>
   </div>
 </div>
