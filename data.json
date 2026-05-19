@@ -31,6 +31,7 @@
       "Micro-influenciadores queer masc SP (3K–20K seguidores) sem parcerias ativas com marcas independentes — custo de UGC baixo, credibilidade alta, audiência exata; Welcome Sunny ainda não consolidou esse relacionamento nesse nicho específico"
     ],
     "ameacas": [
+      "The Dust Company (158K, @thedustcompany) — RECLASSIFICADA COMO AMEAÇA DIRETA (19/05). Mesmas modelagens (wide/baggy/flare), mesmo ticket (R$339–399), mesmo canal e-commerce. Captura o cliente que busca 'calça wide premium brasileira' com vantagem de visibilidade brutal. Diferencial da Border: brim de alfaiataria vs. jeans denim + nicho queer masc vs. broad masc — mas isso só protege se Border tiver visibilidade suficiente para chegar ao consumidor antes da Dust.",
       "Hister (street alfaiataria SP, loja física) como concorrente emergente com presença física consolidada — captura cliente de alfaiataria desconstruída que quer experiência presencial; vantagem difícil de neutralizar sem ponto de venda próprio",
       "Welcome Sunny com drop recente (12/05) e collab Hering ativa — bifurcação de posicionamento (escala + nicho simultâneos) cria pressão nos dois flancos: Border não tem escala para competir no mainstream e pode ter nicho comprimido pelo prestígio da collab",
       "Custo de Meta Ads +12,5% acumulado em 2026 com tendência de alta — compressão de margem em paid social afeta desproporcionalmente marcas pequenas sem base orgânica consolidada para absorver a dependência de ads",
@@ -41,8 +42,21 @@
   "monitoramento": {
     "concorrentes": {
       "date": "2026-05-18",
-      "summary": "Class Official com Drop Fall 2026 'Le Jaguar' ativo desde março. Bolovo rodando coleção 'Home Video 2026' com identidade audiovisual. Alerta principal: Welcome Sunny Garments confirmou collab com Hering para 10/07 — maior movimento de escala do mercado esta semana.",
+      "summary": "Class Official com Drop Fall 2026 'Le Jaguar' ativo desde março. Bolovo rodando coleção 'Home Video 2026' com identidade audiovisual. Alerta principal: Welcome Sunny Garments confirmou collab com Hering para 10/07. RECLASSIFICAÇÃO (19/05): The Dust Company adicionada como concorrente direto — mesmas modelagens (wide, baggy, flare), mesmo ticket (R$339–399), mesmo canal (e-commerce nacional). Antes subclassificada por diferença de posicionamento de marca, mas compete diretamente pelo mesmo momento de compra.",
       "companies": {
+        "dust_company": {
+          "novidades": "Linha de calças wide/baggy/flare/carpenter ativa com tecido 100% algodão alta gramatura. Lançamentos recentes incluem Calça Flare Jeans 70's (Dusty Brown, Dusty Wash, Aged Blue, Blanc Gray) e Calça Baggy Jeans Soft. Flash Ofertas com 11–16% OFF em peças selecionadas.",
+          "ads": "Programa ativo de influencer ('Seja um influencer'). Cupons e cashback de 15% indicam ativação via creators/afiliados. Parcelamento em até 8x sem juros e frete grátis em pedidos acima de R$299.",
+          "growth": "~158K seguidores Instagram (@thedustcompany). TikTok e YouTube ativos. Marca fundada em 2020.",
+          "observation": "RECLASSIFICADA COMO CONCORRENTE DIRETO (19/05). Modelagens wide/baggy/flare são diretamente comparáveis com Costela de Adão e Jibóia. Faixa de preço idêntica (R$289–399). Principal diferença: Dust usa denim/jeans premium; Border usa brim de alfaiataria — produto diferente no toque e caimento, mas mesma silhueta. Posicionamento é 'Creative Minds / streetwear broad masculino' (SC), sem nicho queer masc — esse é o território que Border pode defender. Ameaça real: 158K vs. invisibilidade da Border significa que Dust captura buscas de 'calça wide premium brasileira' com vantagem brutal de visibilidade. Frequência de flash sales e cashback agressivo comprimem percepção de valor — Border precisa diferenciar pelo material e pelo conceito, não pelo preço.",
+          "tipo": "concorrente_direto",
+          "site": "thedustcompany.com.br",
+          "instagram": "@thedustcompany",
+          "ticket_medio": "R$339–399 (calças), 11–16% OFF em flash offers",
+          "modelagens": "Wide, Baggy, Flare, Carpenter",
+          "material": "100% algodão alta gramatura (jeans/sarja), processo de lavagem e amaciamento",
+          "localizacao": "Santa Catarina"
+        },
         "class_official": {
           "novidades": "Drop 1 Fall 2026 com estampa 'Le Jaguar', lançado em 09/03 às 20h. Disponível via Drop Company BR.",
           "ads": "Sem informação específica disponível — ativa em drops regulares sugere presença em paid.",
@@ -76,13 +90,15 @@
         "TikTok e creators como canal principal de ativação de drops — afiliados e cupons dominando awareness"
       ],
       "opportunities": [
+        "Dust Co tem mesma silhueta mas usa jeans/denim — Border pode comunicar 'brim de alfaiataria vs. jeans comum' como diferencial tangível. O consumidor que compara as duas deve entender que são produtos diferentes no caimento e construção. Essa distinção nunca foi comunicada ativamente.",
         "Collab Welcome + Hering abre gap: consumidores que buscam algo mais autoral e independente no território de alfaiataria — Border pode reforçar posicionamento 'não-mainstream'",
         "Genderless ainda sem ocupante forte e coerente no segmento — Border tem vantagem real com conceito 'sem gênero' da N.01",
         "Drops com ritual fixo de lançamento (horário, canal) aumentam antecipação e conversão — testar na N.01 ou próximos drops",
         "Alfaiataria desconstruída validada como macrotendência — momento de amplificar território que a Border já ocupa"
       ],
       "alerts": [
-        "ATENÇÃO: Collab Welcome Sunny Garments × Hering lança em 10/07 — acesso a base massiva da Hering e distribuição nacional em rede física para concorrente direto no território de alfaiataria casual. Monitorar recepção."
+        "ATENÇÃO: Collab Welcome Sunny Garments × Hering lança em 10/07 — acesso a base massiva da Hering e distribuição nacional em rede física para concorrente direto no território de alfaiataria casual. Monitorar recepção.",
+        "RECLASSIFICAÇÃO 19/05: The Dust Company (@thedustcompany, 158K) adicionada como concorrente direto. Mesmas modelagens (wide/baggy/flare), mesmo ticket (R$339–399), mesmo canal. Risco imediato: vantagem de visibilidade brutal (158K vs. Border sem dados) em buscas de 'calça wide premium streetwear Brasil'."
       ]
     },
     "crescimento": {
@@ -104,6 +120,11 @@
           "name": "Border Ltd",
           "followers": "—",
           "note": "Sem informação disponível esta semana — verificar direto no Instagram"
+        },
+        {
+          "name": "The Dust Company ⚠️",
+          "followers": "~158K",
+          "note": "CONCORRENTE DIRETO DE PRODUTO. Calças wide/baggy/flare em tecido pesado, R$339–399. Mesmo ticket, mesmas modelagens — só difere no material (jeans vs. brim) e no nicho (broad masc vs. queer masc). Domina buscas de 'calça wide premium streetwear BR' com vantagem de visibilidade. @thedustcompany"
         },
         {
           "name": "Class Official",
