@@ -1480,6 +1480,68 @@ select option {
   padding: 5px var(--sp2);
 }
 
+/* ── Filtros de tipo de concorrência ─────────────────────────────── */
+.tipo-filter-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp2);
+  padding: 12px 0 16px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp2);
+}
+.tipo-filter-label {
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding-top: 6px;
+  min-width: 80px;
+}
+.tipo-filter-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.tipo-filter-btn {
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--dim);
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: .03em;
+}
+.tipo-filter-btn:hover { border-color: var(--accent2); color: var(--text); }
+.tipo-filter-btn.active[data-tipo="all"]           { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tipo-filter-btn.active[data-tipo="produto"]       { background: rgba(224,112,48,.9); color: #fff; border-color: #e07030; }
+.tipo-filter-btn.active[data-tipo="posicionamento"]{ background: rgba(136,112,192,.9); color: #fff; border-color: #8870c0; }
+.tipo-filter-btn.active[data-tipo="vendas"]        { background: rgba(46,125,94,.9); color: #fff; border-color: #2e7d5e; }
+.tipo-filter-desc {
+  font-size: 12px;
+  color: var(--sub);
+  line-height: 1.6;
+  width: 100%;
+  padding: 4px 8px;
+  border-left: 3px solid var(--border);
+  margin-top: 2px;
+}
+.tipo-filter-count { font-size: 11px; color: var(--dim); padding: 5px 0; white-space: nowrap; }
+.comp-card.tipo-hidden { display: none; }
+.tipo-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 4px; margin-right: 4px;
+}
+.tipo-badge--produto    { background: rgba(224,112,48,.12); color: #c06020; border: 1px solid rgba(224,112,48,.3); }
+.tipo-badge--posicao    { background: rgba(136,112,192,.12); color: #7060b0; border: 1px solid rgba(136,112,192,.3); }
+.tipo-badge--vendas     { background: rgba(46,125,94,.12); color: #1e6d4e; border: 1px solid rgba(46,125,94,.3); }
+.tipo-badges-row { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0 0; }
+
 /* Canvas dos mapas */
 .pos-canvas-wrap {
   position: relative;
