@@ -39,7 +39,7 @@
     window.location.href = '/login.html';
   }
 </script>
-<script>window.DEPLOY_TIMESTAMP="19/05/2026 03:18";</script>
+<script>window.DEPLOY_TIMESTAMP="19/05/2026 03:31";</script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Pular para o conteúdo</a>
@@ -105,6 +105,7 @@
       <button class="nav-item" data-panel="publico" onclick="go('publico',this)"><span class="dot"></span>Público</button>
       <button class="nav-item" data-panel="metrics" onclick="go('metrics',this)"><span class="dot"></span>Métricas manuais</button>
       <button class="nav-item" data-panel="metaads" onclick="go('metaads',this)"><span class="dot"></span>Meta Ads · Guia</button>
+      <button class="nav-item" data-panel="googleads" onclick="go('googleads',this)"><span class="dot"></span>Google Ads · Guia</button>
     </div>
   </div>
 
@@ -136,7 +137,6 @@
       <button class="nav-item" data-panel="planejador" onclick="go('planejador',this)"><span class="dot"></span>Planejador Editorial</button>
       <button class="nav-item" data-panel="referencias" onclick="go('referencias',this)"><span class="dot"></span>Banco de Referências</button>
       <button class="nav-item" data-panel="financeiro" onclick="go('financeiro',this)"><span class="dot"></span>Análise Financeira</button>
-      <button class="nav-item" data-panel="googleads" onclick="go('googleads',this)"><span class="dot"></span>Google Ads · Guia</button>
     </div>
   </div>
 
@@ -413,6 +413,11 @@
       <div class="grupo-card-icon">◇</div>
       <div class="grupo-card-title">Meta Ads · Guia</div>
       <div class="grupo-card-desc">Estrutura de campanhas, segmentações e boas práticas</div>
+    </button>
+    <button class="grupo-card" onclick="go('googleads',null)">
+      <div class="grupo-card-icon">G</div>
+      <div class="grupo-card-title">Google Ads · Guia</div>
+      <div class="grupo-card-desc">Search, Shopping, públicos e estrutura de teste 60 dias</div>
     </button>
   </div>
 </div>
@@ -842,6 +847,19 @@
     <div class="panel-sub">Análise estratégica profunda · atualizar conforme monitora</div>
   </div>
 
+  <!-- FILTRO: TIPO DE CONCORRÊNCIA -->
+  <div class="tipo-filter-bar" id="tipo-filter-bar">
+    <div class="tipo-filter-label">Ver por</div>
+    <div class="tipo-filter-btns">
+      <button class="btn tipo-filter-btn active" data-tipo="all"            onclick="tipoFilterClick(this,'all')">Todos</button>
+      <button class="btn tipo-filter-btn"         data-tipo="produto"        onclick="tipoFilterClick(this,'produto')">⬡ Produto</button>
+      <button class="btn tipo-filter-btn"         data-tipo="posicionamento" onclick="tipoFilterClick(this,'posicionamento')">◈ Posicionamento</button>
+      <button class="btn tipo-filter-btn"         data-tipo="vendas"         onclick="tipoFilterClick(this,'vendas')">◎ Vendas</button>
+    </div>
+    <div class="tipo-filter-count" id="tipo-filter-count"></div>
+    <div class="tipo-filter-desc" id="tipo-filter-desc">Todos os concorrentes monitorados — modelagem, posicionamento e disputa direta de venda.</div>
+  </div>
+
   <!-- ABAS -->
   <div class="tab-container">
     <button id="comp-tab-mapas" onclick="compTab('mapas')" class="tab-btn active">Mapas &amp; Gráficos</button>
@@ -950,10 +968,11 @@
   <div id="comp-pane-cards" style="display:none">
 
   <!-- Class Official -->
-  <div class="comp-card" id="comp-classofficial">
+  <div class="comp-card" id="comp-classofficial" data-tipo="vendas">
     <div class="comp-header">
       <div>
         <div class="comp-name">Class Official</div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--vendas">◎ Vendas</span></div>
         <div class="comp-followers" id="fol-class-display">170K seguidores</div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-class-edit">
           <input type="text" id="fol-class-input" style="width:120px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 175K" aria-label="ex: 175K">
@@ -986,10 +1005,11 @@
   </div>
 
   <!-- Bolovo -->
-  <div class="comp-card" id="comp-bolovo">
+  <div class="comp-card" id="comp-bolovo" data-tipo="vendas">
     <div class="comp-header">
       <div>
         <div class="comp-name">Bolovo</div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--vendas">◎ Vendas</span></div>
         <div class="comp-followers" id="fol-bolovo-display">214K seguidores</div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-bolovo-edit">
           <input type="text" id="fol-bolovo-input" style="width:120px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 220K" aria-label="ex: 220K">
@@ -1022,11 +1042,12 @@
   </div>
 
   <!-- Welcome Sunny -->
-  <div class="comp-card" id="comp-welcomesunny">
+  <div class="comp-card" id="comp-welcomesunny" data-tipo="produto posicionamento vendas">
     <div class="comp-header">
       <div>
         <div class="comp-name">Welcome Sunny Garments</div>
-        <div class="comp-followers" id="fol-welcome-display">120K seguidores</div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--produto">⬡ Produto</span><span class="tipo-badge tipo-badge--posicao">◈ Posicionamento</span><span class="tipo-badge tipo-badge--vendas">◎ Vendas</span></div>
+        <div class="comp-followers" id="fol-welcome-display">123K seguidores</div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-welcome-edit">
           <input type="text" id="fol-welcome-input" style="width:120px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 125K" aria-label="ex: 125K">
           <button class="btn" style="padding:2px 8px;font-size:11px" onclick="saveFollowers('welcome')">salvar</button>
@@ -1058,10 +1079,11 @@
   </div>
 
   <!-- Back to Eden -->
-  <div class="comp-card" id="comp-backtoedem">
+  <div class="comp-card" id="comp-backtoedem" data-tipo="posicionamento">
     <div class="comp-header">
       <div>
         <div class="comp-name">Back to Eden</div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--posicao">◈ Posicionamento</span></div>
         <div class="comp-followers" id="fol-eden-display">22K seguidores</div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-eden-edit">
           <input type="text" id="fol-eden-input" style="width:120px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 25K" aria-label="ex: 25K">
@@ -1094,11 +1116,12 @@
   </div>
 
   <!-- The Dust Company -->
-  <div class="comp-card" id="comp-dustcompany" style="border-color:#e07030">
+  <div class="comp-card" id="comp-dustcompany" style="border-color:#e07030" data-tipo="produto vendas">
     <div class="comp-header">
       <div>
         <div class="comp-name">The Dust Company <span style="font-size:11px;color:#e07030;letter-spacing:.1em;margin-left:8px">CONCORRENTE DIRETO</span></div>
-        <div class="comp-followers" id="fol-dust-display">154K IG · 11.4K TikTok</div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--produto">⬡ Produto</span><span class="tipo-badge tipo-badge--vendas">◎ Vendas</span></div>
+        <div class="comp-followers" id="fol-dust-display">158K IG · TikTok ativo</div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-dust-edit">
           <input type="text" id="fol-dust-input" style="width:160px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 160K IG / 12K TikTok" aria-label="ex: 160K IG / 12K TikTok">
           <button class="btn" style="padding:2px 8px;font-size:11px" onclick="saveFollowers('dust')">salvar</button>
@@ -1133,11 +1156,12 @@
   </div>
 
   <!-- HIST — How I See Things -->
-  <div class="comp-card" style="border-color:rgba(160,128,96,.3)">
+  <div class="comp-card" style="border-color:rgba(160,128,96,.3)" data-tipo="produto posicionamento vendas">
     <div class="comp-header">
       <div>
         <div class="comp-name">HIST <span style="font-size:11px;color:#a08060;letter-spacing:.1em;margin-left:8px">NOVO · ameaça direta</span></div>
         <div style="font-size:12px;color:var(--dim);margin-top:2px">How I See Things</div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--produto">⬡ Produto</span><span class="tipo-badge tipo-badge--posicao">◈ Posicionamento</span><span class="tipo-badge tipo-badge--vendas">◎ Vendas</span></div>
         <div class="comp-followers" id="fol-hist-display">~15K seguidores <span style="font-size:11px;color:var(--dim)">(estimado)</span></div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-hist-edit">
           <input type="text" id="fol-hist-input" style="width:160px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 18K" aria-label="ex: 18K">
@@ -1173,10 +1197,11 @@
   </div>
 
   <!-- Desgosto -->
-  <div class="comp-card" id="comp-desgosto" style="border-color:rgba(136,112,192,.35)">
+  <div class="comp-card" id="comp-desgosto" style="border-color:rgba(136,112,192,.35)" data-tipo="produto posicionamento vendas">
     <div class="comp-header">
       <div>
         <div class="comp-name">Desgosto <span style="font-size:11px;color:#8870c0;letter-spacing:.1em;margin-left:8px">NOVO · ameaça direta</span></div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--produto">⬡ Produto</span><span class="tipo-badge tipo-badge--posicao">◈ Posicionamento</span><span class="tipo-badge tipo-badge--vendas">◎ Vendas</span></div>
         <div class="comp-followers" id="fol-desgosto-display">~28K seguidores <span style="font-size:11px;color:var(--dim)">(estimado)</span></div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-desgosto-edit">
           <input type="text" id="fol-desgosto-input" style="width:160px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 30K" aria-label="ex: 30K">
@@ -1208,10 +1233,11 @@
   </div>
 
   <!-- Piet -->
-  <div class="comp-card" id="comp-piet" style="border-color:rgba(80,144,208,.3)">
+  <div class="comp-card" id="comp-piet" style="border-color:rgba(80,144,208,.3)" data-tipo="produto vendas">
     <div class="comp-header">
       <div>
         <div class="comp-name">Piet <span style="font-size:11px;color:#5090d0;letter-spacing:.1em;margin-left:8px">NOVO · monitorar</span></div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--produto">⬡ Produto</span><span class="tipo-badge tipo-badge--vendas">◎ Vendas</span></div>
         <div class="comp-followers" id="fol-piet-display">~85K seguidores <span style="font-size:11px;color:var(--dim)">(estimado)</span></div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-piet-edit">
           <input type="text" id="fol-piet-input" style="width:160px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 90K" aria-label="ex: 90K">
@@ -1244,10 +1270,11 @@
   </div>
 
   <!-- Pace -->
-  <div class="comp-card" id="comp-pace" style="border-color:rgba(96,168,120,.3)">
+  <div class="comp-card" id="comp-pace" style="border-color:rgba(96,168,120,.3)" data-tipo="produto vendas">
     <div class="comp-header">
       <div>
         <div class="comp-name">Pace <span style="font-size:11px;color:#60a878;letter-spacing:.1em;margin-left:8px">NOVO · monitorar</span></div>
+        <div class="tipo-badges-row"><span class="tipo-badge tipo-badge--produto">⬡ Produto</span><span class="tipo-badge tipo-badge--vendas">◎ Vendas</span></div>
         <div class="comp-followers" id="fol-pace-display">~42K seguidores <span style="font-size:11px;color:var(--dim)">(estimado)</span></div>
         <div style="display:none;align-items:center;gap:6px;margin-top:4px" id="fol-pace-edit">
           <input type="text" id="fol-pace-input" style="width:160px;padding:3px 7px;font-size:12px;background:var(--bg3);border:1px solid var(--accent2);color:var(--text);font-family:var(--mono)" placeholder="ex: 45K" aria-label="ex: 45K">
